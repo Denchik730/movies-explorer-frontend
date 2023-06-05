@@ -1,0 +1,23 @@
+.page__header {
+  background: #073042;
+  /* background-color: #202020; */
+
+  padding-top: 18px;
+  padding-left: 70px;
+  padding-right: 70px;
+
+}
+
+@media screen and (max-width: 910px) {
+  .page__header {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .page__header {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

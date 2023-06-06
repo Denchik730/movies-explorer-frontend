@@ -1,8 +1,11 @@
-.header {
+.header__wrapper-flex {
+  width: 100%;
+  min-width: 320px;
+  max-width: 1280px;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 18px;
   align-items: center;
+  margin: 0 auto;
 }
 
 .header__logo {

@@ -1,27 +1,9 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/fonts.css);
 
-#root {
-  box-sizing: border-box;
-  margin: 0 auto;
-  /* width: 100%; */
-  /* padding-top: 18px;
-  padding-bottom: 20px; */
-  /* padding-left: 70px;
-  padding-right: 70px; */
-    /* min-width: 320px;
-  max-width: 1280px; */
-  background-color: #202020;
-  font-family: 'Inter', Arial, sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-}
-
 @import url(./blocks/page/page.css);
 @import url(./blocks/page/__header/page__header.css);
 
 @import url(./components/Header/Header.css);
+@import url(./components/Main/Main.css);
+@import url(./components/Promo/Promo.css);

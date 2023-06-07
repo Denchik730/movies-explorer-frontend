@@ -18,12 +18,6 @@
   column-gap: 16px;
 }
 
-@media screen and (max-width: 768px) {
-  .header__movies-links-wrapper {
-    display: none;
-  }
-}
-
 .header__movies-link {
   font-weight: 500;
   font-size: 13px;
@@ -36,8 +30,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
   margin-top: 3px;
+  padding: 0;
   width: 100px;
   height: 32px;
   background: #313131;
@@ -50,24 +44,11 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
-  .header__profile-edit-btn {
-    display: none;
-  }
-}
-
 .header__wrapper-auth {
-  align-self: start;
-  margin-top: 3px;
   display: flex;
+  align-self: start;
   column-gap: 30px;
-}
-
-@media screen and (max-width: 425px) {
-  .header__wrapper-auth {
-    margin-top: 6px;
-    column-gap: 14px;
-  }
+  margin-top: 3px;
 }
 
 .header__register-btn {
@@ -79,12 +60,6 @@
   background: inherit;
   border: none;
   cursor: pointer;
-}
-
-@media screen and (max-width: 425px) {
-  .header__register-btn {
-    font-size: 10px;
-  }
 }
 
 .header__login-btn {
@@ -104,40 +79,53 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 425px) {
-  .header__login-btn {
-    width: 54px;
-    height: 26px;
-    font-size: 10px;
-  }
-}
-
 .header__hamburger {
   display: none;
 }
 
 @media screen and (max-width: 768px) {
+  .header__movies-links-wrapper {
+    display: none;
+  }
+
+  .header__profile-edit-btn {
+    display: none;
+  }
+
   .header__hamburger {
+    display: block;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border: none;
     background-image: url('../../images/icon__COLOR_icon-main.svg');
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    display: block;
-    width: 44px;
-    height: 44px;
     cursor: pointer;
-    padding: 0;
     transition: opacity .5s;
   }
 }
 
 @media screen and (max-width: 425px) {
+  .header__wrapper-auth {
+    margin-top: 6px;
+    column-gap: 14px;
+  }
+
   .header__hamburger {
     width: 40px;
     height: 43px;
   }
+
+  .header__register-btn {
+    font-size: 10px;
+  }
+
+  .header__login-btn {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+  }
 }
-
-

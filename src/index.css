@@ -1,9 +1,6 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/fonts.css);
 
-@import url(./blocks/page/page.css);
-@import url(./blocks/page/__header/page__header.css);
-
 @import url(./components/Header/Header.css);
 @import url(./components/Main/Main.css);
 @import url(./components/Promo/Promo.css);

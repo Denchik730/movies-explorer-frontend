@@ -3,7 +3,7 @@
 function Header() {
 
   return (
-    <header className="header page__header">
+    <header className="header app__header">
       <div className="header__logo"/>
       <div className="header__movies-links-wrapper">
         <a href="#" className="header__movies-link">Фильмы</a>

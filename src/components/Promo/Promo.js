@@ -2,7 +2,7 @@ import './Promo.css';
 
 function Promo() {
   return (
-    <section className="promo">
+    <section className="promo app__promo">
         <div className="promo__web-pic"></div>
 
         <div className="promo__wrapper-info">

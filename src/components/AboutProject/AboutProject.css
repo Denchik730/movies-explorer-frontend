@@ -73,6 +73,7 @@
 
   .about-project__info-diplom-descr {
     font-size: 12px;
+    line-height: 1.5;
   }
 
   .about-project__timeline-diplom {
@@ -95,10 +96,12 @@
 
   .about-project__info-diplom-title {
     font-size: 18px;
+    line-height: 1.22;
   }
 
   .about-project__info-diplom-descr {
     font-size: 11px;
+    line-height: 1.45;
   }
 
   .about-project__duration-title {
@@ -117,6 +120,7 @@
   .about-project__timeline-diplom-item {
     padding-top: 11px;
     font-size: 11px;
+    line-height: 1.18;
   }
 
   .about-project__frontend-descr {

@@ -59,6 +59,7 @@
 
   .techs__tools-item {
     font-size: 12px;
+    line-height: 1.25;
   }
 
   .techs__subtitle {
@@ -67,6 +68,7 @@
 
   .techs__descr {
     font-size: 12px;
+    line-height: 1.50;
     margin-top: 22px;
   }
 }
@@ -75,11 +77,13 @@
   .techs__subtitle {
     margin-top: 60px;
     font-size: 30px;
+    line-height: 1.2;
   }
 
   .techs__descr {
-    font-size: 11px;
     margin-top: 24px;
+    font-size: 11px;
+    line-height: 1.45;
   }
 
   .techs__tools {

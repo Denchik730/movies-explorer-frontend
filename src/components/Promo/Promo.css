@@ -31,7 +31,6 @@
   margin-top: 146px;
   width: 129px;
   height: 36px;
-  /* opacity: 0.6; */
   border: 1px solid rgba(255, 255, 255, .6);
   border-radius: 3px;
   font-weight: 500;
@@ -83,13 +82,16 @@
 @media screen and (max-width: 768px) {
   .promo__title {
     font-size: 40px;
+    line-height: 1.25;
   }
 }
 
 @media screen and (max-width: 425px) {
   .promo__title {
-    font-size: 30px;
     margin-top: 44px;
+    font-size: 30px;
+    line-height: 1.27;
+    letter-spacing: -0.04em;
   }
 
   .promo__descr {

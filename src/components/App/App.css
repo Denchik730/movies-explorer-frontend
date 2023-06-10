@@ -76,6 +76,13 @@
   padding-left: 70px;
 }
 
+.app__movies-list {
+  padding-top: 70px;
+  padding-right: 70px;
+  padding-bottom: 10px;
+  padding-left: 70px;
+}
+
 .section-title {
   margin-top: 0;
   margin-bottom: 0;
@@ -165,6 +172,12 @@
     padding-bottom: 60px;
     padding-left: 30px;
   }
+
+  .app__movies-list {
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+  }
 }
 
 
@@ -210,6 +223,13 @@
     padding-right: 14px;
     padding-bottom: 50px;
     padding-left: 14px;
+  }
+
+  .app__movies-list {
+    padding-top: 40px;
+    padding-right: 10px;
+    padding-bottom: 26px;
+    padding-left: 10px;
   }
 
   .section-title {

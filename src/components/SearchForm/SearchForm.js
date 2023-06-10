@@ -8,7 +8,7 @@ function SearchForm() {
           <input type="text" className="search-form__input" placeholder="Фильм"/>
           <button
             type="submit"
-            className={`search-form__button-form`}>
+            className="search-form__button-form">
           </button>
         </fildset>
 

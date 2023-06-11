@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer';
 function App() {
   return (
     <div className="app">
-      <Header/>
+      {/* <Header/> */}
       {/* <Main/> */}
       {/* <Movies/> */}
       {/* <SavedMovies/> */}

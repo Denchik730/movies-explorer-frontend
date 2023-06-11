@@ -90,8 +90,6 @@
 
 .app__register {
   padding-top: 70px;
-  padding-right: 442px;
-  padding-left: 442px;
   padding-bottom: 70px;
 }
 
@@ -122,10 +120,94 @@
 }
 
 .auth__title {
+  margin: 0 auto;
+  text-align: left;
+  max-width: 396px;
   font-weight: 500;
   font-size: 24px;
   line-height: 1.21;
   color: #FFFFFF;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth__form-fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.auth__form-inputs {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.auth__form-inputs-item {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.auth__input-label {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+}
+
+.auth__input {
+  box-sizing: border-box;
+  margin-top: 10px;
+  height: 46px;
+  background: #2F2F2F;
+  border: 0;
+  border-radius: 8px;
+  padding: 15px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.23;
+  color: #FFFFFF;
+}
+
+.auth__submit-btn {
+  height: 45px;
+  background: #4285F4;
+  border: 0;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.auth__descr-link {
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+  color: #8B8B8B;
+}
+
+.auth__link-login {
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+  color: #4285F4;
+  text-decoration: none;
+}
+
+.auth__input-error {
+  min-height: 12px;
+  padding-top: 10px;
+  /* visibility: hidden; */
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #EE3465;
 }
 
 .github-link {
@@ -211,6 +293,11 @@
     padding-top: 236px;
     padding-bottom: 269px;
   }
+
+  .app__register {
+    padding-top: 232px;
+    padding-bottom: 232px;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -273,8 +360,34 @@
     font-size: 18px;
   }
 
+  .app__register {
+    padding-top: 56px;
+    padding-bottom: 30px;
+  }
+
   .section-title::after {
     margin-top: 28px;
+  }
+
+  .auth__title {
+    text-align: center;
+  }
+
+  .auth__submit-btn {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .auth__descr-link {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 1.25;
+
+  }
+
+  .auth__link-login {
+    font-size: 12px;
+    line-height: 1.25;
   }
 }
 

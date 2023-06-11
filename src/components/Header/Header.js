@@ -4,7 +4,7 @@ function Header() {
 
   return (
     <header className="header app__header">
-      <div className="header__logo"/>
+      <div className="logo"/>
       <div className="header__movies-links-wrapper">
         <a href="#" className="header__movies-link">Фильмы</a>
         <a href="#" className="header__movies-link">Сохранённые фильмы</a>

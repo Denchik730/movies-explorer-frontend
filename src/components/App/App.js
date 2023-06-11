@@ -3,6 +3,9 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
+import Register from '../Register/Register';
 import Footer from '../Footer/Footer';
 
 function App() {
@@ -10,8 +13,11 @@ function App() {
     <div className="app">
       <Header/>
       {/* <Main/> */}
-      <Movies/>
-      <Footer/>
+      {/* <Movies/> */}
+      {/* <SavedMovies/> */}
+      {/* <Profile/> */}
+      <Register/>
+      {/* <Footer/> */}
     </div>
   );
 }

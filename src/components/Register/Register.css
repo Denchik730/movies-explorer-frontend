@@ -1,0 +1,12 @@
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register__input-label {
+  width: 50px;
+}
+
+.register__input {
+  width: 50px;
+}

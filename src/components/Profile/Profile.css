@@ -5,6 +5,8 @@
 }
 
 .profile__title {
+  margin-top: 0;
+  margin-bottom: 0;
   text-align: center;
   font-weight: 500;
   font-size: 24px;
@@ -19,7 +21,19 @@
   margin-top: 123px;
 }
 
-.profile__input-wrapper {
+.profile__form-fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.profile__form-inputs {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.profile__form-inputs-item {
   display: flex;
   justify-content: space-between;
   width: 410px;
@@ -103,7 +117,7 @@
     margin-top: 379px;
   }
 
-  .profile__input-wrapper {
+  .profile__form-inputs-item {
     width: 260px;
   }
 

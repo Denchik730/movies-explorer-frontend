@@ -17,10 +17,10 @@ function App() {
       {/* <Main/> */}
       {/* <Movies/> */}
       {/* <SavedMovies/> */}
-      {/* <Profile/> */}
+      <Profile/>
       {/* <Register/> */}
       {/* <Login/> */}
-      <PageNotFound/>
+      {/* <PageNotFound/> */}
       {/* <Footer/> */}
     </div>
   );

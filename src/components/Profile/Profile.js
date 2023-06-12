@@ -7,15 +7,18 @@ function Profile() {
         <h2 className="profile__title">Привет, Виталий!</h2>
 
         <form className="profile__form">
-          <div className="profile__input-wrapper">
-            <label htmlFor="profile__input-name" className="profile__input-label">Имя</label>
-            <input value={"Den"} name="name" id="profile__input-name" type="text" className="profile__input" />
-          </div>
-
-          <div className="profile__input-wrapper">
-            <label htmlFor="profile__input-email" className="profile__input-label">E-mail</label>
-            <input value={"pochta@yandex.ru"} name="email" id="profile__input-email" type="email" className="profile__input" />
-          </div>
+          <fieldset className="profile__form-fieldset">
+            <ul role="none" className="profile__form-inputs">
+              <li className="profile__form-inputs-item">
+                <label htmlFor="profile__input-name" className="profile__input-label">Имя</label>
+                <input value={"Den"} name="name" id="profile__input-name" type="text" className="profile__input" />
+              </li>
+              <li className="profile__form-inputs-item">
+                <label htmlFor="profile__input-email" className="profile__input-label">E-mail</label>
+                <input value={"pochta@yandex.ru"} name="email" id="profile__input-email" type="email" className="profile__input" />
+              </li>
+            </ul>
+          </fieldset>
 
           <button className="profile__btn-submit">Редактировать</button>
           <button className="profile__log-out">Выйти из аккаунта</button>

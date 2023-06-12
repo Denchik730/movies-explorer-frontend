@@ -1,14 +1,18 @@
-.movies-list {
+.movies-list__cards {
   box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(339px, 364px));
   column-gap: 24px;
   row-gap: 37px;
   justify-content: center;
+  list-style-type: none;
 }
 
 @media screen and (max-width: 910px) {
-  .movies-list {
+  .movies-list__cards {
     grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
     column-gap: 30px;
     row-gap: 30px;

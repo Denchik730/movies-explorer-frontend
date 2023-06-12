@@ -4,9 +4,18 @@
   align-items: center;
 }
 
-.header__movies-links-wrapper {
+.header__navigation {
   display: flex;
   column-gap: 16px;
+}
+
+.header__links-movies {
+  display: flex;
+  column-gap: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .header__movies-link {
@@ -75,7 +84,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .header__movies-links-wrapper {
+  .header__navigation {
     display: none;
   }
 

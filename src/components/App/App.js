@@ -13,15 +13,15 @@ import Footer from '../Footer/Footer';
 function App() {
   return (
     <div className="app">
-      {/* <Header/> */}
-      {/* <Main/> */}
+      <Header/>
+      <Main/>
       {/* <Movies/> */}
       {/* <SavedMovies/> */}
-      <Profile/>
+      {/* <Profile/> */}
       {/* <Register/> */}
       {/* <Login/> */}
       {/* <PageNotFound/> */}
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   );
 }

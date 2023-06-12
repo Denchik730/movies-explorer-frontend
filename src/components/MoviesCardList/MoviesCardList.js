@@ -81,7 +81,9 @@ const moviesList = [
 function MoviesCardList() {
   return (
     <section className="movies-list app__movies-list">
-      {moviesList.map((item, i) => <MoviesCard key={i} image={item.image} name={item.name} duration={item.duration}/>)}
+      <ul className="movies-list__cards">
+        {moviesList.map((item, i) => <MoviesCard key={i} image={item.image} name={item.name} duration={item.duration}/>)}
+      </ul>
     </section>
   );
 }

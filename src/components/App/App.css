@@ -93,6 +93,16 @@
   padding-bottom: 70px;
 }
 
+.app__login {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.app__page-not-found {
+  padding-top: 246px;
+  padding-bottom: 60px;
+}
+
 .logo {
   background: url(../../images/logo.svg);
   background-repeat: no-repeat;
@@ -120,9 +130,7 @@
 }
 
 .auth__title {
-  margin: 0 auto;
-  text-align: left;
-  max-width: 396px;
+  margin: 0;
   font-weight: 500;
   font-size: 24px;
   line-height: 1.21;
@@ -298,6 +306,16 @@
     padding-top: 232px;
     padding-bottom: 232px;
   }
+
+  .app__login {
+    padding-top: 232px;
+    padding-bottom: 232px;
+  }
+
+  .app__page-not-found {
+    padding-top: 408px;
+    padding-bottom: 222px;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -362,6 +380,16 @@
 
   .app__register {
     padding-top: 56px;
+    padding-bottom: 30px;
+  }
+
+  .app__login {
+    padding-top: 56px;
+    padding-bottom: 30px;
+  }
+
+  .app__page-not-found {
+    padding-top: 329px;
     padding-bottom: 30px;
   }
 

@@ -1,4 +1,6 @@
 .footer__project-name {
+  margin-top: 0;
+  margin-bottom: 0;
   font-weight: 400;
   font-size: 13px;
   line-height: 1.23;
@@ -28,9 +30,13 @@
   color: #FFFFFF;
 }
 
-.footer__wrapper-links {
+.footer__links {
   display: flex;
   gap: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .footer__link {

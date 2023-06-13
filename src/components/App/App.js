@@ -10,6 +10,8 @@ import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
 
+import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
+
 function App() {
   return (
     <div className="app">
@@ -21,6 +23,7 @@ function App() {
       {/* <Register/> */}
       {/* <Login/> */}
       {/* <PageNotFound/> */}
+      <ErrorMessageModal/>
       <Footer/>
     </div>
   );

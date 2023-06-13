@@ -51,7 +51,7 @@
   width: 310px;
   height: 304px;
   order: 2;
-  background-image: url('../../images/text__COLOR_landing-logo.svg');
+  background-image: url('../../../images/text__COLOR_landing-logo.svg');
   background-repeat: no-repeat;
   background-size: cover;
 }

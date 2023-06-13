@@ -1,6 +1,6 @@
 import './Portfolio.css';
 
-import linkImg from '../../images/text__COLOR_font-main.svg'
+import linkImg from '../../../images/text__COLOR_font-main.svg'
 
 function Portfolio() {
   return (

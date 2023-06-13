@@ -1,8 +1,8 @@
 import './AboutMe.css';
 
-import photo1 from '../../images/jevKMA9UEQ0y9fBgFSX8-KnWwQaIAVw84YkxzcqMx4ZMN5aelaZmnsFRbxYnIgMrQe4Qvqa4nCD9R4R63aP6dEE0.jpg'
-import photo2 from '../../images/photo_2023-06-07_17-17-27.jpg'
-import photo3 from '../../images/Изображение WhatsApp 2023-01-19 в 13.25.32.jpg'
+import photo1 from '../../../images/jevKMA9UEQ0y9fBgFSX8-KnWwQaIAVw84YkxzcqMx4ZMN5aelaZmnsFRbxYnIgMrQe4Qvqa4nCD9R4R63aP6dEE0.jpg'
+import photo2 from '../../../images/photo_2023-06-07_17-17-27.jpg'
+import photo3 from '../../../images/Изображение WhatsApp 2023-01-19 в 13.25.32.jpg'
 
 function AboutMe() {
   return (

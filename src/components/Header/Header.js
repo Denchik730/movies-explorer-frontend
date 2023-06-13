@@ -1,5 +1,6 @@
 // import { Routes, Route, Link } from 'react-router-dom';
 
+import Navigation from "./Navigation/Navigation";
 import MobileMenu from "../MobileMenu/MobileMenu";
 
 function Header() {
@@ -18,10 +19,12 @@ function Header() {
         </ul>
       </nav>
       <button className="header__profile-edit-btn">Аккаунт</button> */}
-      <nav className="header__wrapper-auth">
+      <Navigation/>
+      <button className="header__profile-edit-btn">Аккаунт</button>
+      {/* <nav className="header__wrapper-auth">
         <button className="header__register-btn">Регистрация</button>
         <button className="header__login-btn">Войти</button>
-      </nav>
+      </nav> */}
       <button
         className="header__hamburger"
         type="button"

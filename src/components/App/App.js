@@ -17,8 +17,8 @@ function App() {
     <div className="app">
       <Header/>
       {/* <Main/> */}
-      <Movies/>
-      {/* <SavedMovies/> */}
+      {/* <Movies/> */}
+      <SavedMovies/>
       {/* <Profile/> */}
       {/* <Register/> */}
       {/* <Login/> */}

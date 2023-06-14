@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies() {
   return (
-    <main className="saved-movies">
+    <main className="saved-movies app_saved-movies">
       <SearchForm/>
       <MoviesCardList/>
     </main>

@@ -104,6 +104,11 @@
   padding-right: 70px;
 }
 
+.app_saved-movies {
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
 .logo {
   background: url(../../images/logo.svg);
   background-repeat: no-repeat;
@@ -305,6 +310,11 @@
     padding-right: 30px;
   }
 
+  .app_saved-movies {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
   .app__profile {
     padding-top: 236px;
     padding-bottom: 269px;
@@ -376,6 +386,11 @@
   }
 
   .app__movies {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .app__saved-movies {
     padding-left: 10px;
     padding-right: 10px;
   }

@@ -111,6 +111,7 @@
   background-position: center;
   width: 38px;
   height: 38px;
+  cursor: pointer;
 }
 
 .section-title {
@@ -225,6 +226,11 @@
   line-height: 1.21;
   color: #FFFFFF;
   text-decoration: none;
+  transition: opacity .5s;
+}
+
+.github-link:hover {
+  opacity: .7;
 }
 
 @media screen and (max-width: 1090px) {

@@ -41,6 +41,12 @@
   justify-content: center;
   background-color: inherit;
   color: #FFFFFF;
+  cursor: pointer;
+  transition: opacity .5s;
+}
+
+.promo__about-btn:hover {
+  opacity: .8;
 }
 
 .promo__wrapper-info {

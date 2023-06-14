@@ -21,6 +21,11 @@
   display: flex;
   justify-content: space-between;
   text-decoration: none;
+  transition: opacity .5s;
+}
+
+.porfolio__projects-item-link:hover {
+  opacity: .7;
 }
 
 .porfolio__projects-item-descr {

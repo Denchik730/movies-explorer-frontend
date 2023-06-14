@@ -7,7 +7,7 @@ function Navigation() {
     <nav className="navigation">
       <ul className="navigation__links-movies">
         <li className="navigation__links-item">
-          <a href="#" className="navigation__movies-link">Фильмы</a>
+          <a href="#" className="navigation__movies-link navigation__movies-link_active">Фильмы</a>
         </li>
         <li className="navigation__links-item">
           <a href="#" className="navigation__movies-link">Сохранённые фильмы</a>

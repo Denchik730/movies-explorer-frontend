@@ -9,22 +9,22 @@
   column-gap: 16px;
 }
 
-.header__links-movies {
+/* .header__links-movies {
   display: flex;
   column-gap: 16px;
   margin-top: 0;
   margin-bottom: 0;
   padding: 0;
   list-style-type: none;
-}
+} */
 
-.header__movies-link {
+/* .header__movies-link {
   font-weight: 500;
   font-size: 13px;
   line-height: 1.38;
   color: #FFFFFF;
   text-decoration: none;
-}
+} */
 
 .header__profile-edit-btn {
   display: flex;
@@ -60,6 +60,11 @@
   background: inherit;
   border: none;
   cursor: pointer;
+  transition: opacity .5s;
+}
+
+.header__register-btn:hover {
+  opacity: .7;
 }
 
 .header__login-btn {
@@ -77,6 +82,11 @@
   border-radius: 3px;
   border: none;
   cursor: pointer;
+  transition: opacity .5s;
+}
+
+.header__login-btn:hover {
+  opacity: .8;
 }
 
 .header__hamburger {

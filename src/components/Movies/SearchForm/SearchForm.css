@@ -36,6 +36,12 @@
   background-position: center;
   border: 0;
   border-radius: 48px;
+  cursor: pointer;
+  transition: opacity .5  s;
+}
+
+.search-form__button-form:hover {
+  opacity: .8;
 }
 
 .search-form__checkbox {

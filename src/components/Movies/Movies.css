@@ -13,4 +13,10 @@
   line-height: 1.25;
   text-align: center;
   color: #FFFFFF;
+  cursor: pointer;
+  transition: opacity .5s;
+}
+
+.movies__btn-more:hover {
+  opacity: .8;
 }

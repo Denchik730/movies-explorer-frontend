@@ -59,7 +59,18 @@
 
 .movie-card__delete {
   visibility: hidden;
+  width: 30px;
   background-image: url('../../images/delete-saved-movie.svg');
+  background-size: cover;
+  background-position: left;
+  background-color: inherit;
+  cursor: pointer;
+  transition: opacity .5s;
+  border: none;
+}
+
+.movie-card__delete:hover {
+  opacity: .8;
 }
 
 .movie-card:hover .movie-card__delete {

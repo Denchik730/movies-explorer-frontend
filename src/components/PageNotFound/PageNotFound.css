@@ -6,10 +6,6 @@
   align-content: center;
 }
 
-.page-not-found__error-wrapper {
-
-}
-
 .page-not-found__title {
   margin-top: 0;
   margin-bottom: 0;
@@ -38,6 +34,11 @@
   text-align: center;
   color: #4285F4;
   text-decoration: none;
+  transition: opacity .5s;
+}
+
+.page-not-found__link:hover {
+  opacity: .7;
 }
 
 @media screen and (max-width: 910px) {

@@ -2,6 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #202020;
+}
+
+.header_type_landing {
+  background: #073042;
 }
 
 .header__navigation {
@@ -43,6 +48,7 @@
   color: #FFFFFF;
   cursor: pointer;
   transition: opacity .5s;
+  text-decoration: none;
 }
 
 .header__profile-edit-btn:hover {
@@ -57,6 +63,9 @@
 }
 
 .header__register-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0;
   font-weight: 500;
   font-size: 12px;
@@ -66,6 +75,7 @@
   border: none;
   cursor: pointer;
   transition: opacity .5s;
+  text-decoration: none;
 }
 
 .header__register-btn:hover {
@@ -88,6 +98,7 @@
   border: none;
   cursor: pointer;
   transition: opacity .5s;
+  text-decoration: none;
 }
 
 .header__login-btn:hover {
@@ -99,10 +110,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .header__navigation {
-    display: none;
-  }
-
   .header__profile-edit-btn {
     display: none;
   }

@@ -1,9 +1,11 @@
 import './Login.css';
 
+import { Link } from 'react-router-dom';
+
 function Login() {
   return (
     <main className="login app__login">
-      <div className="logo login__logo"></div>
+      <Link to="/" className="logo login__logo"/>
       <h2 className="auth__title login__title">Рады видеть!</h2>
       <form className="auth__form login__form">
         <fieldset className="auth__form-fieldset">
@@ -22,8 +24,8 @@ function Login() {
           </ul>
         </fieldset>
 
-        <button type="submit" className="auth__submit-btn login__submit-btn">Зарегистрироваться</button>
-        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <a href="#" className="auth__link-login">Регистрация</a></p>
+        <button type="submit" className="auth__submit-btn login__submit-btn">Войти</button>
+        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to="/signup" className="auth__link">Регистрация</Link></p>
       </form>
     </main>
   );

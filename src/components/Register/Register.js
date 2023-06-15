@@ -1,9 +1,11 @@
 import './Register.css';
 
+import { Link } from 'react-router-dom';
+
 function Register() {
   return (
     <main className="register app__register">
-      <div className="logo register__logo"></div>
+      <Link to="/" className="logo register__logo"/>
       <h2 className="auth__title register__title">Добро пожаловать!</h2>
       <form className="auth__form register__form">
         <fieldset className="auth__form-fieldset">
@@ -29,7 +31,7 @@ function Register() {
         </fieldset>
 
         <button type="submit" className="auth__submit-btn register__submit-btn">Зарегистрироваться</button>
-        <p className="auth__descr-link" href="#">Уже зарегистрированы? <a href="#" className="auth__link-login">Войти</a></p>
+        <p className="auth__descr-link" href="#">Уже зарегистрированы? <Link to="/signin" className="auth__link">Войти</Link></p>
       </form>
     </main>
   );

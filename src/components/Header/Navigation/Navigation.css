@@ -33,3 +33,9 @@
 .navigation__movies-link_active:hover {
   opacity: 1;
 }
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
+}

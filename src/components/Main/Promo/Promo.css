@@ -26,7 +26,7 @@
   opacity: 0.5;
 }
 
-.promo__about-btn {
+.promo__about-link {
   padding: 0;
   margin-top: 146px;
   width: 129px;
@@ -43,10 +43,11 @@
   color: #FFFFFF;
   cursor: pointer;
   transition: opacity .5s;
+  text-decoration: none;
 }
 
-.promo__about-btn:hover {
-  opacity: .8;
+.promo__about-link:hover {
+  opacity: .7;
 }
 
 .promo__wrapper-info {

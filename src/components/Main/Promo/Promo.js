@@ -8,7 +8,7 @@ function Promo() {
         <div className="promo__wrapper-info">
           <h1 className="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
           <p className="promo__descr">Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
-          <button className="promo__about-btn">Узнать больше</button>
+          <a href="#about-project" className="promo__about-link">Узнать больше</a>
         </div>
 
 

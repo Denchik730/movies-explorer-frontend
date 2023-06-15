@@ -1,5 +1,7 @@
 import './Profile.css';
 
+import { Link } from 'react-router-dom';
+
 function Profile() {
   return (
     <main className="profile app__profile">
@@ -21,7 +23,7 @@ function Profile() {
           </fieldset>
 
           <button className="profile__btn-submit">Редактировать</button>
-          <button className="profile__log-out">Выйти из аккаунта</button>
+          <Link to="/signout" className="profile__log-out">Выйти из аккаунта</Link>
         </form>
       </div>
     </main>

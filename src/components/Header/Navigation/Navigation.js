@@ -1,5 +1,5 @@
 import './Navigation.css'
-// import { Routes, Route, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Navigation() {
 
@@ -7,10 +7,10 @@ function Navigation() {
     <nav className="navigation">
       <ul className="navigation__links-movies">
         <li className="navigation__links-item">
-          <a href="#" className="navigation__movies-link navigation__movies-link_active">Фильмы</a>
+          <NavLink to="/movies" className={({isActive}) => 'navigation__movies-link' + (isActive ? " navigation__movies-link_active" : "")}>Фильмы</NavLink>
         </li>
         <li className="navigation__links-item">
-          <a href="#" className="navigation__movies-link">Сохранённые фильмы</a>
+          <NavLink to="/saved-movies" className={({isActive}) => 'navigation__movies-link' + (isActive ? " navigation__movies-link_active" : "")}>Сохранённые фильмы</NavLink>
         </li>
       </ul>
     </nav>

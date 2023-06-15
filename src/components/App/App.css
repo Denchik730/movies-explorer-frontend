@@ -15,7 +15,6 @@
 }
 
 .app__header {
-  background: #073042;
   padding-top: 18px;
   padding-left: 70px;
   padding-right: 70px;
@@ -110,6 +109,7 @@
 }
 
 .logo {
+  display: block;
   background: url(../../images/logo.svg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -196,6 +196,12 @@
   line-height: 1.21;
   text-align: center;
   color: #FFFFFF;
+  transition: opacity .5s;
+  cursor: pointer;
+}
+
+.auth__submit-btn:hover {
+  opacity: .8;
 }
 
 .auth__descr-link {
@@ -207,12 +213,17 @@
   color: #8B8B8B;
 }
 
-.auth__link-login {
+.auth__link {
   font-size: 14px;
   line-height: 1.21;
   text-align: center;
   color: #4285F4;
   text-decoration: none;
+  transition: opacity .5s;
+}
+
+.auth__link:hover {
+  opacity: .7;
 }
 
 .auth__input-error {

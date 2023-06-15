@@ -11,19 +11,19 @@ function Portfolio() {
           <li className="porfolio__projects-item">
             <a href="https://github.com/Denchik730/how-to-learn" target="_blank" className="porfolio__projects-item-link">
               <p className="porfolio__projects-item-descr">Статичный сайт</p>
-              <img className="porfolio__projects-item-icon"src={linkImg} alt="" />
+              <img className="porfolio__projects-item-icon"src={linkImg} alt="Иконка стрелки для перехода по ссылке" />
             </a>
           </li>
           <li className="porfolio__projects-item">
             <a href="https://github.com/Denchik730/russian-travel" target="_blank" className="porfolio__projects-item-link">
               <p className="porfolio__projects-item-descr">Адаптивный сайт</p>
-              <img className="porfolio__projects-item-icon"src={linkImg} alt="" />
+              <img className="porfolio__projects-item-icon"src={linkImg} alt="Иконка стрелки для перехода по ссылке" />
             </a>
           </li>
           <li className="porfolio__projects-item">
             <a href="https://github.com/Denchik730/react-mesto-auth" target="_blank" className="porfolio__projects-item-link">
               <p className="porfolio__projects-item-descr">Одностраничное приложение</p>
-              <img className="porfolio__projects-item-icon"src={linkImg} alt="" />
+              <img className="porfolio__projects-item-icon"src={linkImg} alt="Иконка стрелки для перехода по ссылке" />
             </a>
           </li>
         </ul>

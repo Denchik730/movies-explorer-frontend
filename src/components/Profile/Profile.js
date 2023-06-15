@@ -2,13 +2,13 @@ import './Profile.css';
 
 import { Link } from 'react-router-dom';
 
-function Profile() {
+function Profile(props) {
   return (
     <main className="profile app__profile">
       <div className="profile__container">
         <h2 className="profile__title">Привет, Виталий!</h2>
 
-        <form className="profile__form">
+        <form onSubmit={props.onSubmit} className="profile__form">
           <fieldset className="profile__form-fieldset">
             <ul role="none" className="profile__form-inputs">
               <li className="profile__form-inputs-item">
@@ -25,7 +25,7 @@ function Profile() {
           </fieldset>
 
           <button className="profile__btn-submit">Редактировать</button>
-          <Link to="/signout" className="profile__log-out">Выйти из аккаунта</Link>
+          <Link to="/" className="profile__log-out">Выйти из аккаунта</Link>
         </form>
       </div>
     </main>

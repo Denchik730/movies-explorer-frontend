@@ -1,13 +1,20 @@
 import './Login.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    navigate('/movies');
+  }
+
   return (
     <main className="login app__login">
       <Link to="/" className="logo login__logo"/>
       <h2 className="auth__title login__title">Рады видеть!</h2>
-      <form className="auth__form login__form">
+      <form onSubmit={handleRegisterSubmit} className="auth__form login__form">
         <fieldset className="auth__form-fieldset">
           <ul role="none" className="auth__form-inputs">
             <li className="auth__form-inputs-item">

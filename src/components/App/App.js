@@ -1,6 +1,7 @@
 import './App.css';
 
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { useState } from 'react';
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -15,7 +16,17 @@ import Footer from '../Footer/Footer';
 import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
 
 function App() {
+  const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
   let { pathname } = useLocation();
+
+  const handleSubmitProfileWithErr = (e) => {
+    e.preventDefault();
+    setIsOpenErrorModal(true);
+  }
+
+  const handleCloseBtnModal = () => {
+    setIsOpenErrorModal(false);
+  }
 
   return (
     <div className="app">
@@ -36,7 +47,7 @@ function App() {
 
         <Route
           path="/profile"
-          element={<Profile/>}/>
+          element={<Profile onSubmit={handleSubmitProfileWithErr}/>}/>
 
         <Route
           path="/signup"
@@ -53,7 +64,7 @@ function App() {
 
       {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
 
-      <ErrorMessageModal/>
+      <ErrorMessageModal isOpen={isOpenErrorModal} onClose={handleCloseBtnModal}/>
     </div>
   );
 }

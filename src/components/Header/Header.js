@@ -1,12 +1,22 @@
 import './Header.css'
 
+import { useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "../MobileMenu/MobileMenu";
 
 function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let { pathname } = useLocation();
+
+  const handleHamburger = () => {
+    setIsMobileMenuOpen(true);
+  }
+
+  const handleCloseMenu = () => {
+    setIsMobileMenuOpen(false);
+  }
 
   return (
     <header className={pathname === '/' ? 'header header_type_landing app__header' : 'header app__header'}>
@@ -31,6 +41,7 @@ function Header() {
               <Navigation/>
               <Link to="/profile" className="header__profile-edit-btn">Аккаунт</Link>
               <button
+                onClick={handleHamburger}
                 className="header__hamburger"
                 type="button"/>
             </>
@@ -43,6 +54,7 @@ function Header() {
               <Navigation/>
               <Link to="/profile" className="header__profile-edit-btn">Аккаунт</Link>
               <button
+                onClick={handleHamburger}
                 className="header__hamburger"
                 type="button"/>
             </>
@@ -56,12 +68,13 @@ function Header() {
               <Navigation/>
               <Link to="/profile" className="header__profile-edit-btn">Аккаунт</Link>
               <button
+                onClick={handleHamburger}
                 className="header__hamburger"
                 type="button"/>
             </>
           }/>
       </Routes>
-      <MobileMenu/>
+      <MobileMenu isOpen={isMobileMenuOpen} handleClose={handleCloseMenu}/>
     </header>
   );
 }

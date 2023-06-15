@@ -16,7 +16,6 @@ import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
 
 function App() {
   let { pathname } = useLocation();
-  console.log(pathname)
 
   return (
     <div className="app">

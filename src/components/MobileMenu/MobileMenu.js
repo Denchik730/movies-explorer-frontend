@@ -2,11 +2,11 @@ import './MobileMenu.css'
 
 import { NavLink } from 'react-router-dom';
 
-function MobileMenu() {
+function MobileMenu(props) {
   return (
-    <div className="mobile-menu">
+    <div className={`mobile-menu ${props.isOpen ? 'mobile-menu_opened' : ''}`}>
       <div className="mobile-menu__container">
-        <button className="mobile-menu__close"/>
+        <button onClick={props.handleClose} className="mobile-menu__close"/>
         <nav className="mobile-menu__content">
           <ul className="mobile-menu__links">
             <li className="mobile-menu__links-item">
@@ -20,7 +20,7 @@ function MobileMenu() {
             </li>
           </ul>
 
-          <a href="#" className="mobile-menu__profile-edit">Аккаунт</a>
+          <NavLink to="/profile" className="mobile-menu__profile-edit">Аккаунт</NavLink>
         </nav>
       </div>
     </div>

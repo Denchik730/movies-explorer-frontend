@@ -72,6 +72,11 @@
   text-align: center;
   color: #FFFFFF;
   text-decoration: none;
+  padding-bottom: 4px;
+}
+
+.mobile-menu__link_active {
+  border-bottom: 2px solid #FFFFFF;
 }
 
 .mobile-menu__profile-edit {

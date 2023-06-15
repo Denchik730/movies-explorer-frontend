@@ -1,3 +1,5 @@
+import './Header.css'
+
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
 import Navigation from "./Navigation/Navigation";
@@ -59,16 +61,6 @@ function Header() {
             </>
           }/>
       </Routes>
-      {/* <Navigation/> */}
-      {/* <button className="header__profile-edit-btn">Аккаунт</button> */}
-      {/* <nav className="header__wrapper-auth">
-        <button className="header__register-btn">Регистрация</button>
-        <button className="header__login-btn">Войти</button>
-      </nav> */}
-      {/* <button
-        className="header__hamburger"
-        type="button"
-      /> */}
       <MobileMenu/>
     </header>
   );

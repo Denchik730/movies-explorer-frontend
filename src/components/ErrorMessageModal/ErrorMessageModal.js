@@ -4,7 +4,7 @@ import errorImg from '../../images/popup-error.png'
 
 function ErrorMessageModal() {
   return (
-    <section className="tooltip tooltip_opened">
+    <section className="tooltip">
       <div className="tooltip__container">
         <img src={errorImg} className="tooltip__image" alt="Ошибка запроса"/>
         <h2 className="tooltip__title">

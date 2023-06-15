@@ -15,10 +15,12 @@ function Profile() {
                 <label htmlFor="profile__input-name" className="profile__input-label">Имя</label>
                 <input value={"Den"} name="name" id="profile__input-name" type="text" className="profile__input" />
               </li>
+              <span className="profile__input-error profile__input-error_active profile__input-name-error">Что-то пошло не так...</span>
               <li className="profile__form-inputs-item">
                 <label htmlFor="profile__input-email" className="profile__input-label">E-mail</label>
                 <input value={"pochta@yandex.ru"} name="email" id="profile__input-email" type="email" className="profile__input" />
               </li>
+              <span className="profile__input-error profile__input-error_active profile__input-email-error"></span>
             </ul>
           </fieldset>
 

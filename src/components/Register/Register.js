@@ -13,7 +13,7 @@ function Register() {
             <li className="auth__form-inputs-item">
               <label htmlFor="register-input-name" className="auth__input-label">Имя</label>
               <input id="register-input-name" type="name" className="auth__input" />
-              <span className="auth__input-error register-input-name-error"></span>
+              <span className="auth__input-error auth__input-error_active register-input-name-error">Что-то пошло не так...</span>
             </li>
 
             <li className="auth__form-inputs-item">

@@ -53,6 +53,8 @@ function App() {
       </Routes>
 
       {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
+
+      <ErrorMessageModal/>
     </div>
   );
 }

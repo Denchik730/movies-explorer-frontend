@@ -19,7 +19,7 @@ function Login() {
             <li className="auth__form-inputs-item">
               <label htmlFor="login-input-password" className="auth__input-label">Пароль</label>
               <input id="login-input-password" type="password" className="auth__input" />
-              <span className="auth__input-error login-input-password-error">Что-то пошло не так...</span>
+              <span className="auth__input-error auth__input-error_active login-input-password-error">Что-то пошло не так...</span>
             </li>
           </ul>
         </fieldset>

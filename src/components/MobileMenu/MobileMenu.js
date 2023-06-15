@@ -1,5 +1,7 @@
 import './MobileMenu.css'
 
+import { NavLink } from 'react-router-dom';
+
 function MobileMenu() {
   return (
     <div className="mobile-menu">
@@ -8,13 +10,13 @@ function MobileMenu() {
         <nav className="mobile-menu__content">
           <ul className="mobile-menu__links">
             <li className="mobile-menu__links-item">
-              <a href="" className="mobile-menu__link">Главная</a>
+              <NavLink to="/" className={({isActive}) => 'mobile-menu__link' + (isActive ? " mobile-menu__link_active" : "")}>Главная</NavLink>
             </li>
             <li className="mobile-menu__links-item">
-              <a href="" className="mobile-menu__link">Фильмы</a>
+              <NavLink to="/movies" className={({isActive}) => 'mobile-menu__link' + (isActive ? " mobile-menu__link_active" : "")}>Фильмы</NavLink>
             </li>
             <li className="mobile-menu__links-item">
-              <a href="" className="mobile-menu__link">Сохранённые фильмы</a>
+              <NavLink to="/saved-movies" className={({isActive}) => 'mobile-menu__link' + (isActive ? " mobile-menu__link_active" : "")}>Сохранённые фильмы</NavLink>
             </li>
           </ul>
 

@@ -36,6 +36,7 @@
 .profile__form-inputs-item {
   display: flex;
   justify-content: space-between;
+  align-items: end;
   width: 410px;
   margin: 0 auto;
   margin-top: 17px;
@@ -61,14 +62,30 @@
 
 .profile__input {
   min-width: 121px;
-  text-align: right;
   background-color: inherit;
   border: 0;
+  padding: 0;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   text-align: right;
   color: #FFFFFF;
+}
+
+.profile__input-error {
+  display: none;
+  min-height: 12px;
+  padding-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #EE3465;
+}
+
+.profile__input-error_active {
+  display: block;
+  width: 410px;
+  margin: 0 auto;
 }
 
 .profile__btn-submit {
@@ -131,6 +148,11 @@
 
   .profile__form-inputs-item {
     width: 260px;
+  }
+
+  .profile__input-error_active {
+    width: 260px;
+    margin: 0 auto;
   }
 
   .profile__input-label {

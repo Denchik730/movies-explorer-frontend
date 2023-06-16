@@ -1,0 +1,41 @@
+.navigation {
+  display: flex;
+  column-gap: 16px;
+  margin-left: 62px;
+}
+
+.navigation__links-movies {
+  display: flex;
+  column-gap: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.navigation__movies-link {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.38;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: opacity .5s;
+}
+
+.navigation__movies-link_active {
+  font-weight: 500;
+}
+
+.navigation__movies-link:hover {
+  opacity: .7;
+}
+
+.navigation__movies-link_active:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
+}

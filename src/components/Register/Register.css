@@ -1,0 +1,41 @@
+.register {
+  box-sizing: border-box;
+  width: 396px;
+  margin: 0 auto;
+}
+
+.register__title {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.register__form {
+  margin-top: 40px;
+}
+
+.register__submit-btn {
+  margin-top: 69px;
+}
+
+@media screen and (max-width: 576px) {
+  .register {
+    width: 260px;
+  }
+
+  .register__logo {
+    margin: 0 auto;
+  }
+
+  .register__title {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .register__form {
+    margin-top: 80px;
+  }
+
+  .register__submit-btn {
+    margin-top: 157px;
+  }
+}

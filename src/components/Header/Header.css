@@ -1,0 +1,157 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #202020;
+}
+
+.header_type_landing {
+  background: #073042;
+}
+
+.header__navigation {
+  display: flex;
+  column-gap: 16px;
+}
+
+/* .header__links-movies {
+  display: flex;
+  column-gap: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style-type: none;
+} */
+
+/* .header__movies-link {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.38;
+  color: #FFFFFF;
+  text-decoration: none;
+} */
+
+.header__profile-edit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+  padding: 0;
+  width: 100px;
+  height: 32px;
+  background: #313131;
+  border-radius: 20px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: opacity .5s;
+  text-decoration: none;
+}
+
+.header__profile-edit-btn:hover {
+  opacity: .8;
+}
+
+.header__wrapper-auth {
+  display: flex;
+  align-self: start;
+  column-gap: 30px;
+  margin-top: 3px;
+}
+
+.header__register-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #FFFFFF;
+  background: inherit;
+  border: none;
+  cursor: pointer;
+  transition: opacity .5s;
+  text-decoration: none;
+}
+
+.header__register-btn:hover {
+  opacity: .7;
+}
+
+.header__login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 76px;
+  height: 32px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #000000;
+  background: #3DDC84;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .5s;
+  text-decoration: none;
+}
+
+.header__login-btn:hover {
+  opacity: .8;
+}
+
+.header__hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header__profile-edit-btn {
+    display: none;
+  }
+
+  .header__hamburger {
+    display: block;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background-image: url('../../images/icon__COLOR_icon-main.svg');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: opacity .5s;
+  }
+
+  .header__hamburger:hover {
+    opacity: .8;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header__wrapper-auth {
+    margin-top: 6px;
+    column-gap: 14px;
+  }
+
+  .header__hamburger {
+    width: 40px;
+    height: 43px;
+  }
+
+  .header__register-btn {
+    font-size: 10px;
+  }
+
+  .header__login-btn {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+  }
+}

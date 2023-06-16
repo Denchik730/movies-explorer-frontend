@@ -1,0 +1,124 @@
+.about-me__info-container {
+  display: grid;
+  grid-template-columns: minmax(348px, 600px) 270px;
+  justify-content: space-between;
+  column-gap: 49px;
+  margin-top: 66px;
+}
+
+.about-me__info-text {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-me__name {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.about-me__post-and-age {
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #FFFFFF;
+  mix-blend-mode: normal;
+}
+
+.about-me__info-descr {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.57;
+  color: #FFFFFF;
+  mix-blend-mode: normal;
+}
+
+.about-me__github-link {
+  margin-top: auto;
+  align-self: start;
+}
+
+.about-me__photo {
+  width: 270px;
+  height: 327px;
+  justify-self: end;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 910px) {
+  .about-me__info-container {
+    display: grid;
+    grid-template-columns: minmax(348px, 600px) 255px;
+    justify-content: space-between;
+    margin-top: 66px;
+  }
+
+  .about-me__name {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .about-me__post-and-age {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about-me__photo {
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__info-container {
+    grid-template-columns: 1fr;
+    margin-top: 66px;
+  }
+
+  .about-me__info-text {
+    margin-top: 40px;
+    grid-row: 2;
+  }
+
+  .about-me__photo {
+    width: 292px;
+    height: 352px;
+    grid-row: 1;
+    justify-self: left;
+  }
+
+  .about-me__github-link {
+    margin-top: 45px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .about-me__name {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .about-me__post-and-age {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-me__info-descr {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-me__photo {
+    justify-self: center;
+  }
+}

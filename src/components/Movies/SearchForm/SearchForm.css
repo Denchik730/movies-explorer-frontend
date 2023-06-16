@@ -24,6 +24,20 @@
   color: #8B8B8B;
 }
 
+.search-form__input-error {
+  display: none;
+  min-height: 12px;
+  padding-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #EE3465;
+}
+
+.search-form__input-error_active {
+  display: block;
+}
+
 .search-form__button-form {
   width: 80px;
   height: 34px;

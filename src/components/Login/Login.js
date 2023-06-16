@@ -19,13 +19,13 @@ function Login() {
           <ul role="none" className="auth__form-inputs">
             <li className="auth__form-inputs-item">
               <label htmlFor="login-input-email" className="auth__input-label">E-mail</label>
-              <input id="login-input-email" type="email" className="auth__input" />
+              <input id="login-input-email" type="email" className="auth__input" required/>
               <span className="auth__input-error login-input-email-error"></span>
             </li>
 
             <li className="auth__form-inputs-item">
               <label htmlFor="login-input-password" className="auth__input-label">Пароль</label>
-              <input id="login-input-password" type="password" className="auth__input" />
+              <input id="login-input-password" type="password" className="auth__input" required/>
               <span className="auth__input-error auth__input-error_active login-input-password-error">Что-то пошло не так...</span>
             </li>
           </ul>

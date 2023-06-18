@@ -9,7 +9,7 @@ function SavedMovies() {
   return (
     <main className="saved-movies app_saved-movies">
       <SearchForm/>
-      <MoviesCardList moviesList={savedMoviesList}/>
+      {/* <MoviesCardList moviesList={savedMoviesList}/> */}
     </main>
   );
 }

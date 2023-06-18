@@ -8,7 +8,7 @@ function MoviesCard(props) {
   return (
     <li className="movies-list__card-item">
       <figure className="movie-card">
-        <img src={props.image} className="movie-card__img" alt="Обложка фильма"/>
+        <img src={`https://api.nomoreparties.co/${props.image}`} className="movie-card__img" alt="Обложка фильма"/>
         <figcaption className="movie-card__descr">
           <h2 className="movie-card__name">{props.name}</h2>
           <button type="button" aria-label="Нравиться" className={pathname === '/movies' ? 'movie-card__like' : 'movie-card__delete'}/>

@@ -1,23 +1,69 @@
 import './SearchForm.css';
 
-function SearchForm() {
+import React from 'react';
+
+function SearchForm({
+  inputValue,
+  setInputValue,
+  isShort,
+  setIsShort,
+  onSearch,
+}) {
+  const [emptyInputError, setEmptyInputError] = React.useState(false);
+
+  const handleSearchInput = (e) => {
+    setInputValue(e.target.value);
+    console.log(inputValue);
+  }
+
+  const handleCheckbox = () => {
+    setIsShort(!isShort)
+  }
+
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    if (!inputValue) {
+      setEmptyInputError(true);
+    } else {
+      onSearch(inputValue);
+      setEmptyInputError(false);
+    }
+  }
+
   return (
     <section className="search-form app__search-form">
-      <form className="search-form__form">
+      <form
+        className="search-form__form"
+        onSubmit={handleSubmitSearch}
+        noValidate>
         <fildset className="search-form__find-movie">
-          <input type="text" id="search-input-name" className="search-form__input" placeholder="Фильм" required/>
+          <input
+            type="text"
+            id="search-input-name"
+            className="search-form__input"
+            placeholder="Фильм"
+            required
+            onChange={handleSearchInput}
+            />
           <button
             type="submit"
             className="search-form__button-form">
           </button>
         </fildset>
-        <span className="search-form__input-error search-form__input-error_active search-input-name-error">Что-то пошло не так...</span>
+        {emptyInputError && (
+          <span
+            className="search-form__input-error search-form__input-error_active search-input-name-error">
+              Нужно ввести ключевое слово
+          </span>
+        )}
 
         <fildset className="search-form__short-movie">
           <label className='search-form__switch'>
             <input
               className='search-form__checkbox'
               type='checkbox'
+              checked={isShort}
+              onChange={handleCheckbox}
             />
             <span className='search-form__slider'></span>
           </label>

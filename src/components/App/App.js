@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useState } from 'react';
+import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from '../Header/Header';
@@ -15,8 +15,42 @@ import Footer from '../Footer/Footer';
 
 import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
 
+import { getMovies } from '../../utils/MoviesApi';
+
 function App() {
-  const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
+  const [beatFilmsMovies, setBeatFilmsMovies] = React.useState(null);
+  const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = React.useState('');
+  const [beatFilmsIsShort, setBeatFilmsIsShort] = React.useState('');
+  const [beatFilmsInputValue, setBeatFilmsInputValue] = React.useState(''); // Двустороннее связывание для инпута
+
+  const [searchError, setSearchError] = React.useState('');
+  const [isLoadingBeatFilms, setIsLoadingBeatFilms] = React.useState(false);
+  const [windowSize, setWindowSize] = React.useState(window.innerWidth);
+
+  const handleResize = React.useCallback(() => {
+    setWindowSize(window.innerWidth);
+  });
+
+  // Устанавливаю слушатель событий на размер окна
+  React.useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [handleResize]);
+
+  React.useEffect(() => {
+    setIsLoadingBeatFilms(true);
+    getMovies()
+      .then((movies) => {
+        setBeatFilmsMovies(movies);
+        localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
+      })
+      .catch((err) => setSearchError(err))
+      .finally(() => setIsLoadingBeatFilms(false));
+  }, []);
+
+  const [isOpenErrorModal, setIsOpenErrorModal] = React.useState(false);
   let { pathname } = useLocation();
 
   const handleSubmitProfileWithErr = (e) => {
@@ -39,7 +73,20 @@ function App() {
 
         <Route
           path="/movies"
-          element={<Movies/>}/>
+          element={
+            <Movies
+              beatFilmsMovies={beatFilmsMovies}
+              inputValue={beatFilmsInputValue}
+              setInputValue={setBeatFilmsInputValue}
+              isShort={beatFilmsIsShort}
+              setIsShort={setBeatFilmsIsShort}
+              searchQuery={beatFilmsSearchQuery}
+              setSearchQuery={setBeatFilmsSearchQuery}
+              windowSize={windowSize}
+              isLoading={isLoadingBeatFilms}
+              searchError={searchError}
+            />}
+        />
 
         <Route
           path="/saved-movies"

@@ -2,8 +2,10 @@ import './MoviesCardList.css';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ moviesList }) {
-  console.log(moviesList)
+function MoviesCardList({
+  moviesList,
+}) {
+  // console.log(moviesList)
   return (
     <section className="movies-list app__movies-list">
       <ul className="movies-list__cards">

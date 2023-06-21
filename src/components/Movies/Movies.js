@@ -16,30 +16,36 @@ function Movies({
   setSearchQuery,
   windowSize,
   isLoading,
-  searchError
+  searchError,
+  formatTime,
 }) {
-  const [defaultMoviesCards, setDefaultMoviesCards] = React.useState(0);
+  const [viewMoviesCards, setViewMoviesCards] = React.useState(0);
 
+  console.log(beatFilmsMovies)
+  // Определяю количество карточек на странице в зависимости от ширины.
   const moviesCards = React.useCallback(() => {
     if (windowSize >= 1280) {
-      setDefaultMoviesCards(12);
+      setViewMoviesCards(12);
     } else if (windowSize >= 768) {
-      setDefaultMoviesCards(8);
+      setViewMoviesCards(8);
     } else {
-      setDefaultMoviesCards(5);
+      setViewMoviesCards(5);
     }
   }, [windowSize]);
 
+  React.useEffect(() => {
+    if ((searchQuery.length > 0)) {
+      moviesCards();
+    }
+  }, [searchQuery, isShort, moviesCards]);
+
   const showMoreMovies = () => {
     if (windowSize >= 1280) {
-      setDefaultMoviesCards(defaultMoviesCards + 3);
-      console.log(defaultMoviesCards)
+      setViewMoviesCards(viewMoviesCards + 3);
     } else if (windowSize >= 768) {
-      setDefaultMoviesCards(defaultMoviesCards + 2);
-      console.log(defaultMoviesCards)
+      setViewMoviesCards(viewMoviesCards + 2);
     } else {
-      setDefaultMoviesCards(defaultMoviesCards + 2);
-      console.log(defaultMoviesCards)
+      setViewMoviesCards(viewMoviesCards + 2);
     }
   };
 
@@ -47,18 +53,13 @@ function Movies({
     if (beatFilmsMovies === null || searchQuery.length === 0) {
       return false;
     }
-    if (defaultMoviesCards >= beatFilmsMovies.length) {
+
+    if (viewMoviesCards >= beatFilmsMovies.length) {
       return false;
     } else {
       return true;
     }
   };
-
-  React.useEffect(() => {
-    if ((searchQuery.length > 0)) {
-      moviesCards();
-    }
-  }, [searchQuery, isShort, moviesCards]);
 
   const handleSearchButtonClick = (inputValue) => {
     setSearchQuery(inputValue);
@@ -78,12 +79,13 @@ function Movies({
         или сервер недоступен. Подождите немного и попробуйте ещё раз.
       </p> : ''}
       {isLoading ? <Preloader/> : <MoviesCardList
+        formatTime={formatTime}
         moviesList={
-          beatFilmsMovies ?
-            beatFilmsMovies.slice(0, defaultMoviesCards)
-            :
-            JSON.parse(localStorage.getItem('beatFilmsMovies')
-        )}
+          // beatFilmsMovies ?
+             beatFilmsMovies.slice(0, viewMoviesCards)
+            // :
+            // JSON.parse(localStorage.getItem('beatFilmsMovies'))
+        }
       />}
       {isButtonMoreHidden() && <button onClick={showMoreMovies} className="movies__btn-more">Ещё</button>}
     </main>

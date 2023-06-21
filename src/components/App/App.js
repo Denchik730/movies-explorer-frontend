@@ -18,19 +18,29 @@ import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
 import { getMovies } from '../../utils/MoviesApi';
 
 function App() {
-  const [beatFilmsMovies, setBeatFilmsMovies] = React.useState(null);
-  const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = React.useState('');
-  const [beatFilmsIsShort, setBeatFilmsIsShort] = React.useState('');
-  const [beatFilmsInputValue, setBeatFilmsInputValue] = React.useState(''); // Двустороннее связывание для инпута
+  const [beatFilmsMovies, setBeatFilmsMovies] = React.useState(
+    JSON.parse(localStorage.getItem('beatFilmsMovies')) ?? null
+  );
+  const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = React.useState(
+    localStorage.getItem('beatFilmsSearchQuery') ?? ''
+  );
+  const [beatFilmsIsShort, setBeatFilmsIsShort] = React.useState(
+    JSON.parse(localStorage.getItem('beatFilmsIsShort')) ?? false
+  );
+  const [beatFilmsInputValue, setBeatFilmsInputValue] = React.useState(
+    localStorage.getItem('beatFilmsSearchQuery') ?? ''
+  ); // Двустороннее связывание для инпута
 
+  const [isFetching, setIsFetching] = React.useState(false);
   const [searchError, setSearchError] = React.useState('');
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = React.useState(false);
   const [windowSize, setWindowSize] = React.useState(window.innerWidth);
 
   const handleResize = React.useCallback(() => {
-    setWindowSize(window.innerWidth);
+    setTimeout(() => setWindowSize(window.innerWidth), 100);
   });
 
+  console.log(beatFilmsMovies)
   // Устанавливаю слушатель событий на размер окна
   React.useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -39,16 +49,67 @@ function App() {
     };
   }, [handleResize]);
 
+  const formatTime = (minutes) => {
+    const min = minutes % 60;
+    const hour = Math.floor(minutes / 60);
+    return hour ? `${hour}ч ${min}м` : `${min}м`;
+  };
+
+  // React.useEffect(() => {
+  //   if (
+  //     !beatFilmsMovies &&
+  //     beatFilmsSearchQuery.length > 0 // Убрал из условия beatFilmsIsShort
+  //   ) {
+  //     if ('beatFilmsMovies' in localStorage) {
+  //       setBeatFilmsMovies(JSON.parse(localStorage.getItem('beatFilmsMovies')));
+  //       setBeatFilmsSearchQuery(localStorage.getItem('beatFilmsSearchQuery'));
+  //       setBeatFilmsIsShort(
+  //         JSON.parse(localStorage.getItem('beatFilmsIsShort'))
+  //       );
+  //     } else {
+  //       setIsLoadingBeatFilms(true);
+  //       getMovies()
+  //         .then((movies) => {
+  //           console.log(movies)
+  //           setBeatFilmsMovies(movies);
+  //           localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
+  //         })
+  //         .catch((err) => setSearchError(err))
+  //         .finally(() => setIsLoadingBeatFilms(false));
+  //     }
+  //   }
+  // }, []);
+
   React.useEffect(() => {
     setIsLoadingBeatFilms(true);
     getMovies()
       .then((movies) => {
+        console.log(movies)
         setBeatFilmsMovies(movies);
         localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
       })
       .catch((err) => setSearchError(err))
       .finally(() => setIsLoadingBeatFilms(false));
-  }, []);
+  }, [])
+
+  React.useEffect(() => {
+    localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
+    localStorage.setItem('beatFilmsIsShort', beatFilmsIsShort);
+  }, [beatFilmsSearchQuery, beatFilmsIsShort]);
+
+  const flterMoviesBySearch = React.useCallback((movies, searchQuery, isShort) => {
+    if (!movies) {
+      return null;
+    }
+
+    return movies.filter((movie) => {
+      return (isShort ? movie.duration < 40 : movie) &&
+        movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+  });
+
+  const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
+  console.log(filteredMovies)
 
   const [isOpenErrorModal, setIsOpenErrorModal] = React.useState(false);
   let { pathname } = useLocation();
@@ -75,7 +136,7 @@ function App() {
           path="/movies"
           element={
             <Movies
-              beatFilmsMovies={beatFilmsMovies}
+              beatFilmsMovies={filteredMovies}
               inputValue={beatFilmsInputValue}
               setInputValue={setBeatFilmsInputValue}
               isShort={beatFilmsIsShort}
@@ -85,6 +146,7 @@ function App() {
               windowSize={windowSize}
               isLoading={isLoadingBeatFilms}
               searchError={searchError}
+              formatTime={formatTime}
             />}
         />
 

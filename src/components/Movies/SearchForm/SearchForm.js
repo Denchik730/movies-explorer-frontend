@@ -16,10 +16,12 @@ function SearchForm({
     console.log(inputValue);
   }
 
+  // Переключение чекбокса
   const handleCheckbox = () => {
     setIsShort(!isShort)
   }
 
+  // Обработка клика по кнопке поиска
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     if (!inputValue) {
@@ -43,6 +45,7 @@ function SearchForm({
             className="search-form__input"
             placeholder="Фильм"
             required
+            value={inputValue}
             onChange={handleSearchInput}
             />
           <button

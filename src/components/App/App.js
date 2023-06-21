@@ -29,9 +29,8 @@ function App() {
   );
   const [beatFilmsInputValue, setBeatFilmsInputValue] = React.useState(
     localStorage.getItem('beatFilmsSearchQuery') ?? ''
-  ); // Двустороннее связывание для инпута
+  );
 
-  const [isFetching, setIsFetching] = React.useState(false);
   const [searchError, setSearchError] = React.useState('');
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = React.useState(false);
   const [windowSize, setWindowSize] = React.useState(window.innerWidth);
@@ -41,7 +40,6 @@ function App() {
   });
 
   console.log(beatFilmsMovies)
-  // Устанавливаю слушатель событий на размер окна
   React.useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
@@ -54,31 +52,6 @@ function App() {
     const hour = Math.floor(minutes / 60);
     return hour ? `${hour}ч ${min}м` : `${min}м`;
   };
-
-  // React.useEffect(() => {
-  //   if (
-  //     !beatFilmsMovies &&
-  //     beatFilmsSearchQuery.length > 0 // Убрал из условия beatFilmsIsShort
-  //   ) {
-  //     if ('beatFilmsMovies' in localStorage) {
-  //       setBeatFilmsMovies(JSON.parse(localStorage.getItem('beatFilmsMovies')));
-  //       setBeatFilmsSearchQuery(localStorage.getItem('beatFilmsSearchQuery'));
-  //       setBeatFilmsIsShort(
-  //         JSON.parse(localStorage.getItem('beatFilmsIsShort'))
-  //       );
-  //     } else {
-  //       setIsLoadingBeatFilms(true);
-  //       getMovies()
-  //         .then((movies) => {
-  //           console.log(movies)
-  //           setBeatFilmsMovies(movies);
-  //           localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
-  //         })
-  //         .catch((err) => setSearchError(err))
-  //         .finally(() => setIsLoadingBeatFilms(false));
-  //     }
-  //   }
-  // }, []);
 
   React.useEffect(() => {
     setIsLoadingBeatFilms(true);

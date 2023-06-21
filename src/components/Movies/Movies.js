@@ -23,7 +23,6 @@ function Movies({
   const [viewMoviesCards, setViewMoviesCards] = React.useState(0);
 
   console.log(beatFilmsMovies)
-  // Определяю количество карточек на странице в зависимости от ширины.
   const moviesCards = React.useCallback(() => {
     if (windowSize >= 1280) {
       setViewMoviesCards(12);

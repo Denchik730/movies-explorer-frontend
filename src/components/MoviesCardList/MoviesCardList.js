@@ -10,7 +10,7 @@ function MoviesCardList({
   return (
     <section className="movies-list app__movies-list">
       <ul className="movies-list__cards">
-        {moviesList.map((item, i) => <MoviesCard key={i} image={item.image.formats.thumbnail.url} name={item.nameRU} duration={formatTime(item.duration)}/>)}
+        {moviesList.map((movie, i) => <MoviesCard key={i} movie={movie} formatTime={formatTime}/>)}
       </ul>
     </section>
   );

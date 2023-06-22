@@ -1,7 +1,7 @@
 import './Register.css';
 
-import React, {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Register( {handleRegister}) {
   const [formValue, setFormValue] = useState({
@@ -9,7 +9,6 @@ function Register( {handleRegister}) {
     email: '',
     password: '',
   })
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const {name, value} = e.target;

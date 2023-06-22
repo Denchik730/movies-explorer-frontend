@@ -29,7 +29,7 @@ class Api {
     });
   }
 
-  login(password, email) {
+  login(email, password) {
     return this._request(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
@@ -37,7 +37,25 @@ class Api {
         email: email,
         password: password,
       })
-    });
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        return response;
+      }
+    })
+  }
+
+  checkToken(token) {
+    return this._request(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    })
   }
 
   getUserInfo() {
@@ -96,7 +114,8 @@ class Api {
 }
 
 const mainApi = new Api({
-  baseUrl: BASE_URL_MAIN_API,
+  // baseUrl: BASE_URL_MAIN_API,
+  baseUrl: 'http://localhost:3001',
   headers: {
     'Authorization': `Bearer ${localStorage.getItem("token")}`,
     'Content-Type': 'application/json',

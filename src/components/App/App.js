@@ -67,6 +67,10 @@ function App() {
   };
 
   React.useEffect(() => {
+    checkToken();
+  }, []);
+
+  React.useEffect(() => {
     setIsLoadingBeatFilms(true);
     getMovies()
       .then((movies) => {
@@ -97,6 +101,29 @@ function App() {
   const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
   console.log(filteredMovies)
 
+  const checkToken = () => {
+    const jwt = localStorage.getItem("token");
+    if (jwt) {
+      mainApi
+        .checkToken(jwt)
+        .then((data) => {
+          if (data) {
+            // setEmailUser(data.data.email);
+            setLoggedIn(true);
+            navigate("/movies", { replace: true });
+          }
+        })
+        .catch((e) => {
+          if (e === 400) {
+            console.log(`Ошибка: ${e} - Токен не передан или передан не в том формате`);
+          }
+          if (e === 401) {
+            console.log(`Ошибка: ${e} - Переданный токен некорректен`);
+          }
+        });
+    }
+  };
+
   const handleRegister = (name, email, password) => {
     mainApi
       .register(name, email, password)
@@ -110,6 +137,33 @@ function App() {
       })
       .finally(() => {
       });
+  };
+
+  const handleLogin = (email, password) => {
+    mainApi
+      .login(email, password)
+      .then((data) => {
+        if (data.token) {
+          setLoggedIn(true);
+          // setEmailUser(email);
+          navigate("/movies", { replace: true });
+        }
+      })
+      .catch((e) => {
+        if (e === 400) {
+          console.log(`Ошибка: ${e} - не передано одно из полей`);
+        }
+        if (e === 401) {
+          console.log(`Ошибка: ${e} - пользователь с email не найден`);
+        }
+      });
+  };
+
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    // setIsMobileMenuOpen(false);
+    navigate("/sign-in", { replace: true });
   };
 
   const handleLikeClick = (movie) => {
@@ -186,6 +240,7 @@ function App() {
               formatTime={formatTime}
               onCardSave={handleLikeClick}
               saveMovies={savedMovies}
+              loggedIn={loggedIn}
             />}
         />
 
@@ -194,6 +249,7 @@ function App() {
           element={
             <ProtectedRoute
               element={SavedMovies}
+              loggedIn={loggedIn}
             />
           }/>
 
@@ -203,6 +259,7 @@ function App() {
             <ProtectedRoute
               element={Profile}
               onSubmit={handleSubmitProfileWithErr}
+              loggedIn={loggedIn}
             />}
           />
 
@@ -216,7 +273,11 @@ function App() {
 
         <Route
           path="/signin"
-          element={<Login/>}/>
+          element={
+            <Login
+              handleLogin={handleLogin}
+            />}
+          />
 
         <Route
           path="*"

@@ -25,7 +25,11 @@ function Profile(props) {
           </fieldset>
 
           <button className="profile__btn-submit">Редактировать</button>
-          <Link to="/" className="profile__log-out">Выйти из аккаунта</Link>
+          <button
+            onClick={props.handleSignout}
+            className="profile__log-out">
+            Выйти из аккаунта
+          </button>
         </form>
       </div>
     </main>

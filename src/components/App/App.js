@@ -70,6 +70,10 @@ function App() {
     checkToken();
   }, []);
 
+  const handleIsLogged = () => {
+    setLoggedIn(true);
+  };
+
   React.useEffect(() => {
     setIsLoadingBeatFilms(true);
     getMovies()
@@ -109,7 +113,7 @@ function App() {
         .then((data) => {
           if (data) {
             // setEmailUser(data.data.email);
-            setLoggedIn(true);
+            handleIsLogged();
             navigate("/movies", { replace: true });
           }
         })
@@ -144,7 +148,7 @@ function App() {
       .login(email, password)
       .then((data) => {
         if (data.token) {
-          setLoggedIn(true);
+          handleIsLogged();
           // setEmailUser(email);
           navigate("/movies", { replace: true });
         }
@@ -163,7 +167,7 @@ function App() {
     localStorage.removeItem("token");
     setLoggedIn(false);
     // setIsMobileMenuOpen(false);
-    navigate("/sign-in", { replace: true });
+    navigate("/signin", { replace: true });
   };
 
   const handleLikeClick = (movie) => {
@@ -260,6 +264,7 @@ function App() {
               element={Profile}
               onSubmit={handleSubmitProfileWithErr}
               loggedIn={loggedIn}
+              handleSignout={handleSignout}
             />}
           />
 

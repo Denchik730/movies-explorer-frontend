@@ -1,7 +1,7 @@
 import './App.css';
 
 import React from 'react';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -12,10 +12,14 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
 
+import mainApi from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
+
+import { BASE_URL_MAIN_API } from '../../utils/constants';
 
 function App() {
   const [beatFilmsMovies, setBeatFilmsMovies] = React.useState(
@@ -31,9 +35,18 @@ function App() {
     localStorage.getItem('beatFilmsSearchQuery') ?? ''
   );
 
+  const [savedMovies, setSavedMovies] = React.useState(null);
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState('');
+  const [savedMoviesIsShort, setSavedMoviesIsShort] = React.useState(false);
+  const [savedMoviesInputValue, setSavedMoviesInutValue] = React.useState('');
+
   const [searchError, setSearchError] = React.useState('');
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = React.useState(false);
   const [windowSize, setWindowSize] = React.useState(window.innerWidth);
+
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const handleResize = React.useCallback(() => {
     setTimeout(() => setWindowSize(window.innerWidth), 100);
@@ -84,6 +97,56 @@ function App() {
   const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
   console.log(filteredMovies)
 
+  const handleRegister = (name, email, password) => {
+    mainApi
+      .register(name, email, password)
+      .then((data) => {
+        navigate("/signin", { replace: true });
+      })
+      .catch((e) => {
+        if (e === 400) {
+          console.log(`Ошибка: ${e} - некорректно заполнено одно из полей`);
+        }
+      })
+      .finally(() => {
+      });
+  };
+
+  const handleLikeClick = (movie) => {
+    const isMovieSaved = savedMovies.some((item) => item.movieId === movie.id);
+    if (!isMovieSaved) {
+      mainApi
+        .addNewMovies({
+          movieId: movie.id,
+          nameRU: movie.nameRU,
+          image: BASE_URL_MAIN_API + movie.image.url,
+          trailerLink: movie.trailerLink,
+          duration: movie.duration,
+          country: movie.country,
+          director: movie.director,
+          year: movie.year,
+          description: movie.description,
+          thumbnail: BASE_URL_MAIN_API + movie.image.formats.thumbnail.url,
+          owner: movie.owner,
+          nameEN: movie.nameEN,
+        })
+        .then((savedMovie) => setSavedMovies([savedMovie, ...savedMovies]))
+        .catch((err) => console.log(err, err.status, err.message));
+    } else {
+      const savedMovieId = savedMovies.find(
+        (item) => item.movieId === movie.id
+      )._id;
+      mainApi
+        .deleteSavedMovie(savedMovieId)
+        .then(() => {
+          setSavedMovies((state) =>
+            state.filter((item) => item.movieId !== movie.id)
+          );
+        })
+        .catch((err) => console.log(err, err.status, err.message));
+    }
+  };
+
   const [isOpenErrorModal, setIsOpenErrorModal] = React.useState(false);
   let { pathname } = useLocation();
 
@@ -108,7 +171,8 @@ function App() {
         <Route
           path="/movies"
           element={
-            <Movies
+            <ProtectedRoute
+              element={Movies}
               beatFilmsMovies={filteredMovies}
               inputValue={beatFilmsInputValue}
               setInputValue={setBeatFilmsInputValue}
@@ -120,20 +184,35 @@ function App() {
               isLoading={isLoadingBeatFilms}
               searchError={searchError}
               formatTime={formatTime}
+              onCardSave={handleLikeClick}
+              saveMovies={savedMovies}
             />}
         />
 
         <Route
           path="/saved-movies"
-          element={<SavedMovies/>}/>
+          element={
+            <ProtectedRoute
+              element={SavedMovies}
+            />
+          }/>
 
         <Route
           path="/profile"
-          element={<Profile onSubmit={handleSubmitProfileWithErr}/>}/>
+          element={
+            <ProtectedRoute
+              element={Profile}
+              onSubmit={handleSubmitProfileWithErr}
+            />}
+          />
 
         <Route
           path="/signup"
-          element={<Register/>}/>
+          element={
+            <Register
+              handleRegister={handleRegister}
+            />}
+        />
 
         <Route
           path="/signin"
@@ -141,7 +220,14 @@ function App() {
 
         <Route
           path="*"
-          element={<PageNotFound/>}/>
+          element={
+            loggedIn ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Navigate to="/signin" replace />
+            )
+          }
+        />
       </Routes>
 
       {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}

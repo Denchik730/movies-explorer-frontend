@@ -19,6 +19,8 @@ function Movies({
   isLoading,
   searchError,
   formatTime,
+  onCardSave,
+  savedMovies,
 }) {
   const [viewMoviesCards, setViewMoviesCards] = React.useState(0);
 
@@ -80,6 +82,8 @@ function Movies({
       </p> : ''}
       {isLoading ? <Preloader/> : beatFilmsMovies.length > 0 ? <MoviesCardList
         formatTime={formatTime}
+        onCardSave={onCardSave}
+        savedMovies={savedMovies}
         moviesList={
           // beatFilmsMovies ?
              beatFilmsMovies.slice(0, viewMoviesCards)

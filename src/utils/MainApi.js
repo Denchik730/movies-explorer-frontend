@@ -1,3 +1,5 @@
+import { BASE_URL_MAIN_API } from "./constants";
+
 class Api {
   constructor({baseUrl, headers}) {
     this._url = baseUrl;
@@ -15,11 +17,12 @@ class Api {
     return fetch(url, options).then(this._checkRes);
   }
 
-  register(password, email) {
+  register(name, email, password) {
     return this._request(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
+        name: name,
         email: email,
         password: password,
       })
@@ -92,12 +95,12 @@ class Api {
   }
 }
 
-const api = new Api({
-  baseUrl: 'https://api.filmreview.nomoredomains.rocks/',
+const mainApi = new Api({
+  baseUrl: BASE_URL_MAIN_API,
   headers: {
     'Authorization': `Bearer ${localStorage.getItem("token")}`,
     'Content-Type': 'application/json',
   },
 });
 
-export default api;
+export default mainApi;

@@ -43,7 +43,6 @@ function App() {
 
   const [searchError, setSearchError] = useState('');
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -181,6 +180,8 @@ function App() {
         }
       })
       .catch((e) => {
+        setIsTooltipActive(true);
+
         if (e === 400) {
           setIsInfoTooltipMessage({
             image: errorImg,
@@ -191,14 +192,14 @@ function App() {
         if (e === 401) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Пользователь с таким email не найден`',
+            description: 'Пользователь с таким email не найден',
           });
         }
 
         if (e === 500) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            caption: 'Ошибка сервера, попробуйте ещё раз чуть позже`',
+            caption: 'Ошибка сервера, попробуйте ещё раз чуть позже',
           });
         }
       });

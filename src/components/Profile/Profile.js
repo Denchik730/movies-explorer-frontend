@@ -1,8 +1,10 @@
 import './Profile.css';
 
-import { Link } from 'react-router-dom';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Profile(props) {
+  const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
+
   return (
     <main className="profile app__profile">
       <div className="profile__container">
@@ -13,22 +15,43 @@ function Profile(props) {
             <ul role="none" className="profile__form-inputs">
               <li className="profile__form-inputs-item">
                 <label htmlFor="profile__input-name" className="profile__input-label">Имя</label>
-                <input value={"Den"} name="name" id="profile__input-name" type="text" className="profile__input" required/>
+                <input
+                  name="name"
+                  id="profile__input-name"
+                  type="text"
+                  className="profile__input"
+                  required
+                  minLength={2}
+                  maxLength={30}
+                  value={values.name || ''}
+                  onChange={handleChange}/>
               </li>
-              <span className="profile__input-error profile__input-error_active profile__input-name-error">Что-то пошло не так...</span>
+              <span className={`profile__input-error ${errors.name && "profile__input-error_active"} profile__input-name-error`}>{errors.name || ''}</span>
               <li className="profile__form-inputs-item">
                 <label htmlFor="profile__input-email" className="profile__input-label">E-mail</label>
-                <input value={"pochta@yandex.ru"} name="email" id="profile__input-email" type="email" className="profile__input" required/>
+                <input
+                  name="email"
+                  id="profile__input-email"
+                  type="email"
+                  className="profile__input"
+                  required
+                  value={values.email || ''}
+                  onChange={handleChange}/>
               </li>
-              <span className="profile__input-error profile__input-error_active profile__input-email-error"></span>
+              <span className={`profile__input-error ${errors.email && 'profile__input-error_active'} profile__input-email-error`}>{errors.email || ''}</span>
             </ul>
           </fieldset>
 
-          <button className="profile__btn-submit">Редактировать</button>
+          <button
+            disabled={!isValid}
+            type="submit"
+            className={`profile__btn-submit ${!isValid && 'profile__btn-submit_inactive'}`}>
+              Редактировать
+          </button>
           <button
             onClick={props.handleSignout}
             className="profile__log-out">
-            Выйти из аккаунта
+              Выйти из аккаунта
           </button>
         </form>
       </div>

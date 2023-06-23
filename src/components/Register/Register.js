@@ -84,7 +84,7 @@ function Register({ handleRegister }) {
         <button
           disabled={!isValid}
           type="submit"
-          className={`auth__submit-btn register__submit-btn ${!isValid &&  'auth__submit-btn_inactive'}`}>
+          className={`auth__submit-btn register__submit-btn ${!isValid && 'auth__submit-btn_inactive'}`}>
             Зарегистрироваться
         </button>
         <p className="auth__descr-link" href="#">Уже зарегистрированы? <Link to="/signin" className="auth__link">Войти</Link></p>

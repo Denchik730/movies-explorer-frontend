@@ -1,28 +1,32 @@
 import './Login.css';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+
 function Login({ handleLogin }) {
-  const [formValue, setFormValue] = useState({
-    username: '',
-    password: ''
-  })
+  const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
+  // const [formValue, setFormValue] = useState({
+  //   username: '',
+  //   password: ''
+  // })
 
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+  // const handleChange = (e) => {
+  //   const {name, value} = e.target;
+
+  //   setFormValue({
+  //     ...formValue,
+  //     [name]: value
+  //   });
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { email, password } = formValue;
+    const { email, password } = values;
     handleLogin(email, password);
   }
 
@@ -41,10 +45,10 @@ function Login({ handleLogin }) {
                 id="login-input-email"
                 className="auth__input"
                 required
-                value={formValue.email}
+                value={values.email || ''}
                 onChange={handleChange}
               />
-              <span className="auth__input-error login-input-email-error"></span>
+              <span className={`auth__input-error ${errors.email && 'auth__input-error_active'} login-input-email-error`}>{errors.email || ''}</span>
             </li>
 
             <li className="auth__form-inputs-item">
@@ -55,15 +59,20 @@ function Login({ handleLogin }) {
                 id="login-input-password"
                 className="auth__input"
                 required
-                value={formValue.password}
+                value={values.password || ''}
                 onChange={handleChange}
               />
-              <span className="auth__input-error auth__input-error_active login-input-password-error">Что-то пошло не так...</span>
+              <span className={`auth__input-error ${errors.password && 'auth__input-error_active'} login-input-password-error`}>{errors.password || ''}</span>
             </li>
           </ul>
         </fieldset>
 
-        <button type="submit" className="auth__submit-btn login__submit-btn">Войти</button>
+        <button
+          disabled={!isValid}
+          type="submit"
+          className={`auth__submit-btn register__submit-btn ${!isValid &&  'auth__submit-btn_inactive'}`}>
+            Войти
+        </button>
         <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to="/signup" className="auth__link">Регистрация</Link></p>
       </form>
     </main>

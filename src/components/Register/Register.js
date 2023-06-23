@@ -1,11 +1,11 @@
 import './Register.css';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Register( {handleRegister}) {
+function Register({ handleRegister }) {
   const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
 
   // const [formValue, setFormValue] = useState({

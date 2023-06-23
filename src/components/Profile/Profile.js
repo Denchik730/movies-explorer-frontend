@@ -1,9 +1,15 @@
 import './Profile.css';
 
+import React, { useContext, useEffect } from 'react';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Profile(props) {
   const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
+
+  const { currentUser } = useContext(CurrentUserContext);
+  console.log(currentUser)
 
   return (
     <main className="profile app__profile">

@@ -51,7 +51,6 @@ class Api {
     return this._request(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       }

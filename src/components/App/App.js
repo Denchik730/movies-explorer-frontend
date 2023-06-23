@@ -19,6 +19,8 @@ import Tooltip from '../Tooltip/Tooltip';
 import mainApi from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
 
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
 import { BASE_URL_MAIN_API } from '../../utils/constants';
 import errorImg from '../../images/popup-error.png'
 
@@ -45,6 +47,7 @@ function App() {
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = useState(false);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
+  const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [isTooltipActive, setIsTooltipActive] = useState(false);
   const [isInfoTooltipMessage, setIsInfoTooltipMessage] = useState({
@@ -118,7 +121,10 @@ function App() {
         .checkToken(jwt)
         .then((data) => {
           if (data) {
+            console.log(data);
             // setEmailUser(data.data.email);
+            const { _id, name, email } = data;
+            setCurrentUser({ _id, name, email });
             handleIsLogged();
             navigate("/movies", { replace: true });
           }
@@ -176,6 +182,7 @@ function App() {
         if (data.token) {
           handleIsLogged();
           // setEmailUser(email);
+          checkToken();
           navigate("/movies", { replace: true });
         }
       })
@@ -261,94 +268,96 @@ function App() {
   };
 
   return (
-    <div className="app">
-      {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header/> : null}
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <div className="app">
+        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header/> : null}
 
-      <Routes>
-        <Route
-          path="/"
-          element={<Main/>}/>
+        <Routes>
+          <Route
+            path="/"
+            element={<Main/>}/>
 
-        <Route
-          path="/movies"
-          element={
-            <ProtectedRoute
-              element={Movies}
-              beatFilmsMovies={filteredMovies}
-              inputValue={beatFilmsInputValue}
-              setInputValue={setBeatFilmsInputValue}
-              isShort={beatFilmsIsShort}
-              setIsShort={setBeatFilmsIsShort}
-              searchQuery={beatFilmsSearchQuery}
-              setSearchQuery={setBeatFilmsSearchQuery}
-              windowSize={windowSize}
-              isLoading={isLoadingBeatFilms}
-              searchError={searchError}
-              formatTime={formatTime}
-              onCardSave={handleLikeClick}
-              saveMovies={savedMovies}
-              loggedIn={loggedIn}
-            />}
-        />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={Movies}
+                beatFilmsMovies={filteredMovies}
+                inputValue={beatFilmsInputValue}
+                setInputValue={setBeatFilmsInputValue}
+                isShort={beatFilmsIsShort}
+                setIsShort={setBeatFilmsIsShort}
+                searchQuery={beatFilmsSearchQuery}
+                setSearchQuery={setBeatFilmsSearchQuery}
+                windowSize={windowSize}
+                isLoading={isLoadingBeatFilms}
+                searchError={searchError}
+                formatTime={formatTime}
+                onCardSave={handleLikeClick}
+                saveMovies={savedMovies}
+                loggedIn={loggedIn}
+              />}
+          />
 
-        <Route
-          path="/saved-movies"
-          element={
-            <ProtectedRoute
-              element={SavedMovies}
-              loggedIn={loggedIn}
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={SavedMovies}
+                loggedIn={loggedIn}
+              />
+            }/>
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={Profile}
+                onSubmit={handleSubmitProfileWithErr}
+                loggedIn={loggedIn}
+                handleSignout={handleSignout}
+              />}
             />
-          }/>
 
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute
-              element={Profile}
-              onSubmit={handleSubmitProfileWithErr}
-              loggedIn={loggedIn}
-              handleSignout={handleSignout}
-            />}
+          <Route
+            path="/signup"
+            element={
+              <Register
+                handleRegister={handleRegister}
+              />}
           />
 
-        <Route
-          path="/signup"
-          element={
-            <Register
-              handleRegister={handleRegister}
-            />}
-        />
+          <Route
+            path="/signin"
+            element={
+              <Login
+                handleLogin={handleLogin}
+              />}
+            />
 
-        <Route
-          path="/signin"
-          element={
-            <Login
-              handleLogin={handleLogin}
-            />}
+          <Route
+            path="*"
+            element={
+              loggedIn ? (
+                <Navigate to="/" replace />
+              ) : (
+                <Navigate to="/signin" replace />
+              )
+            }
           />
+        </Routes>
 
-        <Route
-          path="*"
-          element={
-            loggedIn ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Navigate to="/signin" replace />
-            )
-          }
+        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
+
+        <Tooltip
+          isTooltipActive={isTooltipActive}
+          isOpen={isOpenErrorModal}
+          onClose={closeModal}
+          description={isInfoTooltipMessage.description}
+          image={isInfoTooltipMessage.image}
         />
-      </Routes>
-
-      {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
-
-      <Tooltip
-        isTooltipActive={isTooltipActive}
-        isOpen={isOpenErrorModal}
-        onClose={closeModal}
-        description={isInfoTooltipMessage.description}
-        image={isInfoTooltipMessage.image}
-      />
-    </div>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

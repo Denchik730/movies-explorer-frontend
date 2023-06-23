@@ -6,10 +6,17 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Profile(props) {
-  const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
+  const {values, handleChange, resetForm, errors, isValid, setValues} = useFormWithValidation();
 
   const { currentUser } = useContext(CurrentUserContext);
   console.log(currentUser)
+
+  useEffect(() => {
+    setValues({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [setValues, currentUser.name, currentUser.email]);
 
   return (
     <main className="profile app__profile">

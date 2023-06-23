@@ -204,6 +204,19 @@
   opacity: .8;
 }
 
+.auth__submit-btn_inactive {
+  opacity: 0.2;
+  background: transparent;
+  cursor: default;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 2px;
+}
+
+.auth__submit-btn_inactive:hover {
+  opacity: 0.2;
+}
+
 .auth__descr-link {
   margin-top: 16px;
   margin-bottom: 0;

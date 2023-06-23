@@ -3,25 +3,29 @@ import './Register.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+
 function Register( {handleRegister}) {
-  const [formValue, setFormValue] = useState({
-    name: '',
-    email: '',
-    password: '',
-  })
+  const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
+  // const [formValue, setFormValue] = useState({
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  // })
 
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+  // const handleChange = (e) => {
+  //   const {name, value} = e.target;
+
+  //   setFormValue({
+  //     ...formValue,
+  //     [name]: value
+  //   });
+  // }
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const {name, email, password} = formValue;
+    const {name, email, password} = values;
     handleRegister(name, email, password)
   }
   return (
@@ -39,10 +43,12 @@ function Register( {handleRegister}) {
                 name="name"
                 className="auth__input"
                 required
-                value={formValue.name}
+                minLength={2}
+                maxLength={30}
+                value={values.name || ''}
                 onChange={handleChange}
                 />
-              <span className="auth__input-error auth__input-error_active register-input-name-error">Что-то пошло не так...</span>
+              <span className={`auth__input-error ${errors.name && 'auth__input-error_active'} register-input-name-error`}>{errors.name || ''}</span>
             </li>
 
             <li className="auth__form-inputs-item">
@@ -53,10 +59,10 @@ function Register( {handleRegister}) {
                 name="email"
                 className="auth__input"
                 required
-                value={formValue.email}
+                value={values.email || ''}
                 onChange={handleChange}
               />
-              <span className="auth__input-error register-input-email-error"></span>
+              <span className={`auth__input-error ${errors.email && 'auth__input-error_active'} register-input-email-error`}>{errors.email || ''}</span>
             </li>
 
             <li className="auth__form-inputs-item">
@@ -67,15 +73,20 @@ function Register( {handleRegister}) {
                 name="password"
                 className="auth__input"
                 required
-                value={formValue.password}
+                value={values.password || ''}
                 onChange={handleChange}
                 />
-              <span className="auth__input-error register-input-password-error">Что-то пошло не так...</span>
+              <span className={`auth__input-error ${errors.password && 'auth__input-error_active'} register-input-password-error`}>{errors.password || ''}</span>
             </li>
           </ul>
         </fieldset>
 
-        <button type="submit" className="auth__submit-btn register__submit-btn">Зарегистрироваться</button>
+        <button
+          disabled={!isValid}
+          type="submit"
+          className={`auth__submit-btn register__submit-btn ${!isValid &&  'auth__submit-btn_inactive'}`}>
+            Зарегистрироваться
+        </button>
         <p className="auth__descr-link" href="#">Уже зарегистрированы? <Link to="/signin" className="auth__link">Войти</Link></p>
       </form>
     </main>

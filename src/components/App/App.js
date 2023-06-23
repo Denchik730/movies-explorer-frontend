@@ -1,6 +1,6 @@
 import './App.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 
 import Header from '../Header/Header';
@@ -14,37 +14,44 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import ErrorMessageModal from '../ErrorMessageModal/ErrorMessageModal';
+import Tooltip from '../Tooltip/Tooltip';
 
 import mainApi from '../../utils/MainApi';
 import { getMovies } from '../../utils/MoviesApi';
 
 import { BASE_URL_MAIN_API } from '../../utils/constants';
+import errorImg from '../../images/popup-error.png'
 
 function App() {
-  const [beatFilmsMovies, setBeatFilmsMovies] = React.useState(
+  const [beatFilmsMovies, setBeatFilmsMovies] = useState(
     JSON.parse(localStorage.getItem('beatFilmsMovies')) ?? null
   );
-  const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = React.useState(
+  const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = useState(
     localStorage.getItem('beatFilmsSearchQuery') ?? ''
   );
-  const [beatFilmsIsShort, setBeatFilmsIsShort] = React.useState(
+  const [beatFilmsIsShort, setBeatFilmsIsShort] = useState(
     JSON.parse(localStorage.getItem('beatFilmsIsShort')) ?? false
   );
-  const [beatFilmsInputValue, setBeatFilmsInputValue] = React.useState(
+  const [beatFilmsInputValue, setBeatFilmsInputValue] = useState(
     localStorage.getItem('beatFilmsSearchQuery') ?? ''
   );
 
-  const [savedMovies, setSavedMovies] = React.useState(null);
-  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState('');
-  const [savedMoviesIsShort, setSavedMoviesIsShort] = React.useState(false);
-  const [savedMoviesInputValue, setSavedMoviesInutValue] = React.useState('');
+  const [savedMovies, setSavedMovies] = useState(null);
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = useState('');
+  const [savedMoviesIsShort, setSavedMoviesIsShort] = useState(false);
+  const [savedMoviesInputValue, setSavedMoviesInutValue] = useState('');
 
-  const [searchError, setSearchError] = React.useState('');
-  const [isLoadingBeatFilms, setIsLoadingBeatFilms] = React.useState(false);
-  const [windowSize, setWindowSize] = React.useState(window.innerWidth);
+  const [searchError, setSearchError] = useState('');
+  const [isLoadingBeatFilms, setIsLoadingBeatFilms] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isTooltipActive, setIsTooltipActive] = useState(false);
+  const [isInfoTooltipMessage, setIsInfoTooltipMessage] = useState({
+    image: '',
+    description: '',
+  });
 
   const navigate = useNavigate();
 
@@ -118,6 +125,8 @@ function App() {
           }
         })
         .catch((e) => {
+          // setIsTooltipActive(true);
+
           if (e === 400) {
             console.log(`Ошибка: ${e} - Токен не передан или передан не в том формате`);
           }
@@ -132,15 +141,33 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((data) => {
-        navigate("/signin", { replace: true });
+        // navigate("/signin", { replace: true });
+        handleLogin(email, password)
       })
       .catch((e) => {
+        setIsTooltipActive(true);
+        console.log(e)
         if (e === 400) {
-          console.log(`Ошибка: ${e} - некорректно заполнено одно из полей`);
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Некорректно заполнено одно из полей',
+          });
+        }
+
+        if (e === 409) {
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Пользователь с указанной почтой уже существует',
+          });
+        }
+
+        if (e === 500) {
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Ошибка сервера, попробуйте ещё раз чуть позже',
+          });
         }
       })
-      .finally(() => {
-      });
   };
 
   const handleLogin = (email, password) => {
@@ -155,10 +182,24 @@ function App() {
       })
       .catch((e) => {
         if (e === 400) {
-          console.log(`Ошибка: ${e} - не передано одно из полей`);
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Некорректно заполнено одно из полей',
+          });
         }
+
         if (e === 401) {
-          console.log(`Ошибка: ${e} - пользователь с email не найден`);
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Пользователь с таким email не найден`',
+          });
+        }
+
+        if (e === 500) {
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            caption: 'Ошибка сервера, попробуйте ещё раз чуть позже`',
+          });
         }
       });
   };
@@ -213,9 +254,10 @@ function App() {
     setIsOpenErrorModal(true);
   }
 
-  const handleCloseBtnModal = () => {
-    setIsOpenErrorModal(false);
-  }
+  // Закрытие модальных окон
+  const closeModal = () => {
+    setIsTooltipActive(false);
+  };
 
   return (
     <div className="app">
@@ -298,7 +340,13 @@ function App() {
 
       {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
 
-      <ErrorMessageModal isOpen={isOpenErrorModal} onClose={handleCloseBtnModal}/>
+      <Tooltip
+        isTooltipActive={isTooltipActive}
+        isOpen={isOpenErrorModal}
+        onClose={closeModal}
+        description={isInfoTooltipMessage.description}
+        image={isInfoTooltipMessage.image}
+      />
     </div>
   );
 }

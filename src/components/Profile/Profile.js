@@ -18,12 +18,22 @@ function Profile(props) {
     });
   }, [setValues, currentUser.name, currentUser.email]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email } = values
+    props.handleEditProfile(name, email);
+  }
+
+  const isButtonAble =
+    isValid &&
+    (values.name !== currentUser.name || values.email !== currentUser.email);
+
   return (
     <main className="profile app__profile">
       <div className="profile__container">
-        <h2 className="profile__title">Привет, Виталий!</h2>
+        <h2 className="profile__title">Привет, {currentUser.name}!</h2>
 
-        <form onSubmit={props.onSubmit} className="profile__form">
+        <form onSubmit={handleSubmit} className="profile__form">
           <fieldset className="profile__form-fieldset">
             <ul role="none" className="profile__form-inputs">
               <li className="profile__form-inputs-item">
@@ -56,9 +66,9 @@ function Profile(props) {
           </fieldset>
 
           <button
-            disabled={!isValid}
+            disabled={!isButtonAble}
             type="submit"
-            className={`profile__btn-submit ${!isValid && 'profile__btn-submit_inactive'}`}>
+            className={`profile__btn-submit ${!isButtonAble && 'profile__btn-submit_inactive'}`}>
               Редактировать
           </button>
           <button

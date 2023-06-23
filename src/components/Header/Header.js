@@ -6,7 +6,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "../MobileMenu/MobileMenu";
 
-function Header() {
+function Header( {loggedIn} ) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let { pathname } = useLocation();
 
@@ -22,7 +22,22 @@ function Header() {
     <header className={pathname === '/' ? 'header header_type_landing app__header' : 'header app__header'}>
       <Link to="/" className="logo"/>
 
-      <Routes>
+      {loggedIn ? (
+        <>
+          <Navigation/>
+          <Link to="/profile" className="header__profile-edit-btn">Аккаунт</Link>
+          <button
+            onClick={handleHamburger}
+            className="header__hamburger"
+            type="button"/>
+        </>
+      ) : (
+        <nav className="header__wrapper-auth">
+          <Link to="/signup" className="header__register-btn">Регистрация</Link>
+          <Link to="/signin" className="header__login-btn">Войти</Link>
+        </nav>
+      )}
+      {/* <Routes>
         <Route
           path="/"
           element={
@@ -73,7 +88,7 @@ function Header() {
                 type="button"/>
             </>
           }/>
-      </Routes>
+      </Routes> */}
       <MobileMenu isOpen={isMobileMenuOpen} handleClose={handleCloseMenu}/>
     </header>
   );

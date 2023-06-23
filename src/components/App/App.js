@@ -23,6 +23,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import { BASE_URL_MAIN_API } from '../../utils/constants';
 import errorImg from '../../images/popup-error.png'
+import fetchOK from '../../images/popup-success.png'
 
 function App() {
   const [beatFilmsMovies, setBeatFilmsMovies] = useState(
@@ -206,17 +207,52 @@ function App() {
         if (e === 500) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            caption: 'Ошибка сервера, попробуйте ещё раз чуть позже',
+            description: 'Ошибка сервера, попробуйте ещё раз чуть позже',
           });
         }
       });
   };
 
+  const handleEditProfile = ( name, email ) => {
+    mainApi
+      .setProfileUserInfo( name, email )
+      .then((userData) => {
+        setCurrentUser({
+          name: userData.name,
+          email: userData.email,
+        });
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+        setIsTooltipActive(true);
+        setIsInfoTooltipMessage({
+          image: fetchOK,
+          description: 'Данные успешно изменены',
+        });
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+
+        setIsTooltipActive(true);
+        if (err === 409) {
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Пользователь с указанной почтой уже существует',
+          });
+        }
+      })
+  }
+
   const handleSignout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
     // setIsMobileMenuOpen(false);
-    navigate("/signin", { replace: true });
+    navigate("/", { replace: true });
   };
 
   const handleLikeClick = (movie) => {
@@ -270,7 +306,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <div className="app">
-        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header/> : null}
+        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header loggedIn={loggedIn}/> : null}
 
         <Routes>
           <Route
@@ -316,6 +352,7 @@ function App() {
                 onSubmit={handleSubmitProfileWithErr}
                 loggedIn={loggedIn}
                 handleSignout={handleSignout}
+                handleEditProfile={handleEditProfile}
               />}
             />
 

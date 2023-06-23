@@ -63,13 +63,13 @@ class Api {
     });
   }
 
-  setProfileUserInfo(dataUser) {
+  setProfileUserInfo(name, email) {
     return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        email: dataUser.email,
-        name: dataUser.name,
+        email: email,
+        name: name,
       })
     });
   }

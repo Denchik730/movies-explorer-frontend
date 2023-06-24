@@ -6,6 +6,7 @@ function MoviesCardList({
   moviesList,
   formatTime,
   onCardSave,
+  onCardDelete,
   savedMovies,
 }) {
   console.log(moviesList)
@@ -19,6 +20,7 @@ function MoviesCardList({
             movie={movie}
             formatTime={formatTime}
             onCardSave={onCardSave}
+            onCardDelete={onCardDelete}
             savedMovies={savedMovies}
           />
         ))}

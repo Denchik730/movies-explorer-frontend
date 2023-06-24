@@ -8,6 +8,7 @@ import { savedMoviesList } from '../../utils/constants';
 function SavedMovies({
   movies,
   formatTime,
+  onCardDelete,
 }) {
   console.log('gggg', movies)
   return (
@@ -18,7 +19,7 @@ function SavedMovies({
         <MoviesCardList
           moviesList={movies}
           formatTime={formatTime}
-          // onCardDelete={onCardDelete}
+          onCardDelete={onCardDelete}
         />
       )}
     </main>

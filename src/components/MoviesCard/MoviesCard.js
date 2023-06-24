@@ -6,6 +6,7 @@ function MoviesCard({
   movie,
   formatTime,
   onCardSave,
+  onCardDelete,
   savedMovies,
 }) {
   let { pathname } = useLocation();
@@ -21,6 +22,10 @@ function MoviesCard({
    // Обработчик клика лайка
   const handleLikeClick = () => {
     onCardSave(movie);
+  };
+
+  const handleDeleteClick = () => {
+    onCardDelete(movie);
   };
 
   return (
@@ -55,7 +60,7 @@ function MoviesCard({
               type="button"
               aria-label="Удалить"
               className='movie-card__delete'
-              onClick={handleLikeClick}/>
+              onClick={handleDeleteClick}/>
           )}
           <p className="movie-card__duration">{formatTime(movie.duration)}</p>
         </figcaption>

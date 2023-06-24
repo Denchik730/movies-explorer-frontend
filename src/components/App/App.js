@@ -302,6 +302,17 @@ function App() {
     }
   };
 
+  const handleDeleteClick = (movie) => {
+    mainApi
+      .deleteSavedMovie(movie._id)
+      .then(() => {
+        setSavedMovies((state) =>
+          state.filter((item) => item.movieId !== movie.movieId)
+        );
+      })
+      .catch((err) => console.log(err, err.status, err.message));
+  };
+
   const [isOpenErrorModal, setIsOpenErrorModal] = React.useState(false);
   let { pathname } = useLocation();
 
@@ -354,6 +365,7 @@ function App() {
                 element={SavedMovies}
                 movies={filteredSavedMovies}
                 formatTime={formatTime}
+                onCardDelete={handleDeleteClick}
                 loggedIn={loggedIn}
               />
             }/>

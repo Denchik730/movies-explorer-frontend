@@ -24,7 +24,6 @@ function Movies({
 }) {
   const [viewMoviesCards, setViewMoviesCards] = React.useState(0);
 
-  console.log(beatFilmsMovies)
   const moviesCards = React.useCallback(() => {
     if (windowSize >= 1280) {
       setViewMoviesCards(12);

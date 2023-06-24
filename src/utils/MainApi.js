@@ -95,7 +95,7 @@ class Api {
         nameRU: dataMovies.nameRU,
         nameEN: dataMovies.nameEN,
         thumbnail: dataMovies.thumbnail,
-        movieId: dataMovies.id,
+        movieId: dataMovies.movieId,
       })
     });
   }

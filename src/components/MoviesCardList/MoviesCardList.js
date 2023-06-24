@@ -8,7 +8,8 @@ function MoviesCardList({
   onCardSave,
   savedMovies,
 }) {
-  // console.log(moviesList)
+  console.log(moviesList)
+  console.log(savedMovies)
   return (
     <section className="movies-list app__movies-list">
       <ul className="movies-list__cards">

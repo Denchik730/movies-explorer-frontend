@@ -22,6 +22,7 @@ import { getMovies } from '../../utils/MoviesApi';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import { BASE_URL_MAIN_API } from '../../utils/constants';
+import { BASE_URL_MOVIES_API } from '../../utils/constants';
 import errorImg from '../../images/popup-error.png'
 import fetchOK from '../../images/popup-success.png'
 
@@ -56,13 +57,14 @@ function App() {
     description: '',
   });
 
+  console.log(savedMovies)
+
   const navigate = useNavigate();
 
   const handleResize = React.useCallback(() => {
     setTimeout(() => setWindowSize(window.innerWidth), 100);
   });
 
-  console.log(beatFilmsMovies)
   React.useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
@@ -97,6 +99,15 @@ function App() {
   }, [])
 
   React.useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getSavedMovies()
+        .then((movies) => setSavedMovies(movies.reverse()))
+        .catch((err) => setSearchError(err));
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
     localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
     localStorage.setItem('beatFilmsIsShort', beatFilmsIsShort);
   }, [beatFilmsSearchQuery, beatFilmsIsShort]);
@@ -113,7 +124,8 @@ function App() {
   });
 
   const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
-  console.log(filteredMovies)
+  const filteredSavedMovies = flterMoviesBySearch(savedMovies, savedMoviesSearchQuery, savedMoviesIsShort)
+  console.log(filteredSavedMovies)
 
   const checkToken = () => {
     const jwt = localStorage.getItem("token");
@@ -262,14 +274,14 @@ function App() {
         .addNewMovies({
           movieId: movie.id,
           nameRU: movie.nameRU,
-          image: BASE_URL_MAIN_API + movie.image.url,
+          image: BASE_URL_MOVIES_API + movie.image.url,
           trailerLink: movie.trailerLink,
           duration: movie.duration,
           country: movie.country,
           director: movie.director,
           year: movie.year,
           description: movie.description,
-          thumbnail: BASE_URL_MAIN_API + movie.image.formats.thumbnail.url,
+          thumbnail: BASE_URL_MOVIES_API + movie.image.formats.thumbnail.url,
           owner: movie.owner,
           nameEN: movie.nameEN,
         })
@@ -330,7 +342,7 @@ function App() {
                 searchError={searchError}
                 formatTime={formatTime}
                 onCardSave={handleLikeClick}
-                saveMovies={savedMovies}
+                savedMovies={savedMovies}
                 loggedIn={loggedIn}
               />}
           />
@@ -340,6 +352,8 @@ function App() {
             element={
               <ProtectedRoute
                 element={SavedMovies}
+                movies={filteredSavedMovies}
+                formatTime={formatTime}
                 loggedIn={loggedIn}
               />
             }/>

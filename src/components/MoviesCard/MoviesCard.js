@@ -9,12 +9,17 @@ function MoviesCard({
   savedMovies,
 }) {
   let { pathname } = useLocation();
+  console.log(movie)
+  console.log(savedMovies)
 
-  const isLiked = true;
-  // const isLiked = savedMovies.some((item) => item.movieId === movie.id);
+  // const isLiked = true;
+  const isLiked = savedMovies
+    ? savedMovies.some((item) => item.movieId === movie.id)
+    : false;
+  console.log(isLiked)
 
    // Обработчик клика лайка
-   const handleLikeClick = () => {
+  const handleLikeClick = () => {
     onCardSave(movie);
   };
 
@@ -25,10 +30,17 @@ function MoviesCard({
           href={movie.trailerLink}
           target='_blank'
           className="movie-card__trailer-link">
-          <img
-            src={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
-            className="movie-card__img"
-            alt="Обложка фильма"/>
+          {pathname === '/movies' ? (
+            <img
+              src={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`}
+              className="movie-card__img"
+              alt="Обложка фильма"/>
+          ) : (
+            <img
+              src={movie.thumbnail}
+              className="movie-card__img"
+              alt="Обложка фильма"/>
+          )}
         </a>
         <figcaption className="movie-card__descr">
           <h2 className="movie-card__name">{movie.nameRU}</h2>

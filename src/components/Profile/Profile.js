@@ -5,7 +5,11 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Profile(props) {
+function Profile({
+  handleSignout,
+  handleEditProfile,
+  isFetching,
+}) {
   const {values, handleChange, resetForm, errors, isValid, setValues} = useFormWithValidation();
 
   const { currentUser } = useContext(CurrentUserContext);
@@ -20,12 +24,13 @@ function Profile(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email } = values
-    props.handleEditProfile(name, email);
+    handleEditProfile(name, email);
   }
 
   const isButtonAble =
     isValid &&
-    (values.name !== currentUser.name || values.email !== currentUser.email);
+    (values.name !== currentUser.name || values.email !== currentUser.email) &&
+    !isFetching;
 
   return (
     <main className="profile app__profile">
@@ -71,7 +76,7 @@ function Profile(props) {
               Редактировать
           </button>
           <button
-            onClick={props.handleSignout}
+            onClick={handleSignout}
             className="profile__log-out">
               Выйти из аккаунта
           </button>

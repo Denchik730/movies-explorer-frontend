@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-function Register({ handleRegister }) {
+function Register({
+  handleRegister,
+  isFetching,
+}) {
   const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
 
   const handleSubmit = (e) => {
@@ -67,7 +70,7 @@ function Register({ handleRegister }) {
         </fieldset>
 
         <button
-          disabled={!isValid}
+          disabled={!isValid || isFetching}
           type="submit"
           className={`auth__submit-btn register__submit-btn ${!isValid && 'auth__submit-btn_inactive'}`}>
             Зарегистрироваться

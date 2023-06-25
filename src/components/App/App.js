@@ -41,6 +41,7 @@ function App() {
 
   const [searchError, setSearchError] = useState('');
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = useState(false);
+  const [isFetching, setIsFetching] = useState(null);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const [currentUser, setCurrentUser] = useState({});
@@ -155,6 +156,8 @@ function App() {
   };
 
   const handleRegister = (name, email, password) => {
+    setIsFetching(true);
+
     mainApi
       .register(name, email, password)
       .then((data) => {
@@ -184,9 +187,12 @@ function App() {
           });
         }
       })
+      .finally(() => setIsFetching(false))
   };
 
   const handleLogin = (email, password) => {
+    setIsFetching(true);
+
     mainApi
       .login(email, password)
       .then((data) => {
@@ -219,10 +225,13 @@ function App() {
             description: 'Ошибка сервера, попробуйте ещё раз чуть позже',
           });
         }
-      });
+      })
+      .finally(() => setIsFetching(false))
   };
 
   const handleEditProfile = ( name, email ) => {
+    setIsFetching(true);
+
     mainApi
       .setProfileUserInfo( name, email )
       .then((userData) => {
@@ -237,8 +246,6 @@ function App() {
         });
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-
         setIsTooltipActive(true);
         if (err === 409) {
           setIsInfoTooltipMessage({
@@ -247,6 +254,7 @@ function App() {
           });
         }
       })
+      .finally(() => setIsFetching(false))
   }
 
   const handleSignout = () => {
@@ -254,7 +262,6 @@ function App() {
     localStorage.removeItem('beatFilmsMovies');
     localStorage.removeItem('beatFilmsSearchQuery');
     localStorage.removeItem('beatFilmsIsShort');
-    // localStorage.removeItem('searchResult');
     localStorage.removeItem('savedMovies');
     setLoggedIn(false);
     setBeatFilmsMovies(null);
@@ -319,7 +326,6 @@ function App() {
       .catch((err) => console.log(err, err.status, err.message));
   };
 
-  // const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
   let { pathname } = useLocation();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -398,10 +404,10 @@ function App() {
             element={
               <ProtectedRoute
                 element={Profile}
-                // onSubmit={handleSubmitProfileWithErr}
                 loggedIn={loggedIn}
                 handleSignout={handleSignout}
                 handleEditProfile={handleEditProfile}
+                isFetching={isFetching}
               />}
             />
 
@@ -410,6 +416,7 @@ function App() {
             element={
               <Register
                 handleRegister={handleRegister}
+                isFetching={isFetching}
               />}
           />
 
@@ -418,6 +425,7 @@ function App() {
             element={
               <Login
                 handleLogin={handleLogin}
+                isFetching={isFetching}
               />}
             />
 
@@ -433,11 +441,14 @@ function App() {
           />
         </Routes>
 
-        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer/> : null}
+        {pathname === '/' ||
+        pathname === '/movies' ||
+        pathname === '/saved-movies' ?
+          <Footer/> :
+          null}
 
         <Tooltip
           isTooltipActive={isTooltipActive}
-          // isOpen={isOpenErrorModal}
           onClose={closeModal}
           description={isInfoTooltipMessage.description}
           image={isInfoTooltipMessage.image}

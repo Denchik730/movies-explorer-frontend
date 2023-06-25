@@ -5,16 +5,15 @@ import React from "react";
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import { moviesList } from '../../utils/constants';
 
 function Movies({
   beatFilmsMovies,
+  searchQuery,
+  setSearchQuery,
   inputValue,
   setInputValue,
   isShort,
   setIsShort,
-  searchQuery,
-  setSearchQuery,
   windowSize,
   isLoading,
   searchError,
@@ -79,17 +78,19 @@ function Movies({
         Во время запроса произошла ошибка. Возможно, проблема с соединением
         или сервер недоступен. Подождите немного и попробуйте ещё раз.
       </p> : ''}
-      {isLoading ? <Preloader/> : beatFilmsMovies.length > 0 ? <MoviesCardList
-        formatTime={formatTime}
-        onCardSave={onCardSave}
-        savedMovies={savedMovies}
-        moviesList={
-          // beatFilmsMovies ?
-             beatFilmsMovies.slice(0, viewMoviesCards)
-            // :
-            // JSON.parse(localStorage.getItem('beatFilmsMovies'))
-        }
-      /> :<p className="movies__no-found">Ничего не найдено</p>}
+      {
+        !beatFilmsMovies ? null : (
+          isLoading ? <Preloader/> : beatFilmsMovies.length > 0 ? <MoviesCardList
+          formatTime={formatTime}
+          onCardSave={onCardSave}
+          savedMovies={savedMovies}
+          moviesList={
+            beatFilmsMovies.slice(0, viewMoviesCards)
+          }
+          /> :<p className="movies__no-found">Ничего не найдено</p>
+        )
+      }
+
       {isButtonMoreHidden() && <button onClick={showMoreMovies} className="movies__btn-more">Ещё</button>}
     </main>
   );

@@ -10,20 +10,17 @@ function MoviesCard({
   savedMovies,
 }) {
   let { pathname } = useLocation();
-  console.log(movie)
-  console.log(savedMovies)
 
-  // const isLiked = true;
   const isLiked = savedMovies
     ? savedMovies.some((item) => item.movieId === movie.id)
     : false;
-  console.log(isLiked)
 
-   // Обработчик клика лайка
+  // Обработчик клика лайка
   const handleLikeClick = () => {
     onCardSave(movie);
   };
 
+  // Обработчик клика кнопки удаления
   const handleDeleteClick = () => {
     onCardDelete(movie);
   };

@@ -39,7 +39,6 @@ class Api {
       })
     })
     .then((response) => {
-      console.log(response)
       if (response.token) {
         localStorage.setItem('token', response.token);
         return response;

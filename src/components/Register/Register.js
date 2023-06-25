@@ -1,6 +1,5 @@
 import './Register.css';
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
@@ -8,20 +7,6 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 function Register({ handleRegister }) {
   const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
 
-  // const [formValue, setFormValue] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  // })
-
-  // const handleChange = (e) => {
-  //   const {name, value} = e.target;
-
-  //   setFormValue({
-  //     ...formValue,
-  //     [name]: value
-  //   });
-  // }
   const handleSubmit = (e) => {
     e.preventDefault();
 

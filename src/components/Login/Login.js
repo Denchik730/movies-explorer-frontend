@@ -1,27 +1,11 @@
 import './Login.css';
 
-import React, { useState } from 'react';
-
 import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Login({ handleLogin }) {
   const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
-
-  // const [formValue, setFormValue] = useState({
-  //   username: '',
-  //   password: ''
-  // })
-
-  // const handleChange = (e) => {
-  //   const {name, value} = e.target;
-
-  //   setFormValue({
-  //     ...formValue,
-  //     [name]: value
-  //   });
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();

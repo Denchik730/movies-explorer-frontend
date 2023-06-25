@@ -1,6 +1,6 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 
 import Header from '../Header/Header';
@@ -10,34 +10,28 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import Tooltip from '../Tooltip/Tooltip';
-
-import mainApi from '../../utils/MainApi';
-import { getMovies } from '../../utils/MoviesApi';
 
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-import { BASE_URL_MAIN_API } from '../../utils/constants';
 import { BASE_URL_MOVIES_API } from '../../utils/constants';
-import errorImg from '../../images/popup-error.png'
-import fetchOK from '../../images/popup-success.png'
+import errorImg from '../../images/popup-error.png';
+import fetchOK from '../../images/popup-success.png';
+import mainApi from '../../utils/MainApi';
+import { getMovies } from '../../utils/MoviesApi';
 
 function App() {
-  const [beatFilmsMovies, setBeatFilmsMovies] = useState(
-    JSON.parse(localStorage.getItem('beatFilmsMovies')) ?? null
-  );
+  const [beatFilmsMovies, setBeatFilmsMovies] = useState(null);
   const [beatFilmsSearchQuery, setBeatFilmsSearchQuery] = useState(
-    localStorage.getItem('beatFilmsSearchQuery') ?? ''
+    localStorage.getItem('beatFilmsSearchQuery') || ''
   );
   const [beatFilmsIsShort, setBeatFilmsIsShort] = useState(
-    JSON.parse(localStorage.getItem('beatFilmsIsShort')) ?? false
+    JSON.parse(localStorage.getItem('beatFilmsIsShort')) || false
   );
   const [beatFilmsInputValue, setBeatFilmsInputValue] = useState(
-    localStorage.getItem('beatFilmsSearchQuery') ?? ''
+    localStorage.getItem('beatFilmsSearchQuery') || ''
   );
 
   const [savedMovies, setSavedMovies] = useState(null);
@@ -57,15 +51,13 @@ function App() {
     description: '',
   });
 
-  console.log(savedMovies)
-
   const navigate = useNavigate();
 
-  const handleResize = React.useCallback(() => {
+  const handleResize = useCallback(() => {
     setTimeout(() => setWindowSize(window.innerWidth), 100);
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -78,7 +70,7 @@ function App() {
     return hour ? `${hour}ч ${min}м` : `${min}м`;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkToken();
   }, []);
 
@@ -86,33 +78,33 @@ function App() {
     setLoggedIn(true);
   };
 
-  React.useEffect(() => {
-    setIsLoadingBeatFilms(true);
-    getMovies()
-      .then((movies) => {
-        console.log(movies)
-        setBeatFilmsMovies(movies);
-        localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
-      })
-      .catch((err) => setSearchError(err))
-      .finally(() => setIsLoadingBeatFilms(false));
-  }, [])
+  useEffect(() => {
+    if (
+      !beatFilmsMovies &&
+      beatFilmsInputValue.length > 0
+    ) {
+      setIsLoadingBeatFilms(true);
+      getMovies()
+        .then((movies) => {
+          setBeatFilmsMovies(movies);
+          localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
+        })
+        .catch((err) => setSearchError(err))
+        .finally(() => setIsLoadingBeatFilms(false));
+    }
 
-  React.useEffect(() => {
+  }, [beatFilmsMovies, beatFilmsInputValue, loggedIn])
+
+  useEffect(() => {
     if (loggedIn) {
       mainApi
         .getSavedMovies()
-        .then((movies) => setSavedMovies(movies.reverse()))
-        .catch((err) => setSearchError(err));
+        .then((movies) => setSavedMovies(movies))
+        .catch((err) => console.log(err));
     }
   }, [loggedIn]);
 
-  React.useEffect(() => {
-    localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
-    localStorage.setItem('beatFilmsIsShort', beatFilmsIsShort);
-  }, [beatFilmsSearchQuery, beatFilmsIsShort]);
-
-  const flterMoviesBySearch = React.useCallback((movies, searchQuery, isShort) => {
+  const flterMoviesBySearch = useCallback((movies, searchQuery, isShort) => {
     if (!movies) {
       return null;
     }
@@ -124,8 +116,19 @@ function App() {
   });
 
   const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
+  // localStorage.setItem('searchResult', JSON.stringify(filteredMovies));
+
   const filteredSavedMovies = flterMoviesBySearch(savedMovies, savedMoviesSearchQuery, savedMoviesIsShort)
-  console.log(filteredSavedMovies)
+  // localStorage.setItem('savedMovies', JSON.stringify(filteredSavedMovies));
+
+  useEffect(() => {
+    if (loggedIn) {
+      localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
+      localStorage.setItem('beatFilmsIsShort', JSON.stringify(beatFilmsIsShort));
+      // localStorage.setItem('searchResult', JSON.stringify(filteredMovies));
+      // localStorage.setItem('savedMovies', JSON.stringify(filteredSavedMovies));
+    }
+  }, [loggedIn, beatFilmsSearchQuery, beatFilmsIsShort, filteredMovies, filteredSavedMovies]);
 
   const checkToken = () => {
     const jwt = localStorage.getItem("token");
@@ -134,8 +137,6 @@ function App() {
         .checkToken(jwt)
         .then((data) => {
           if (data) {
-            console.log(data);
-            // setEmailUser(data.data.email);
             const { _id, name, email } = data;
             setCurrentUser({ _id, name, email });
             handleIsLogged();
@@ -143,8 +144,6 @@ function App() {
           }
         })
         .catch((e) => {
-          // setIsTooltipActive(true);
-
           if (e === 400) {
             console.log(`Ошибка: ${e} - Токен не передан или передан не в том формате`);
           }
@@ -159,7 +158,6 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((data) => {
-        // navigate("/signin", { replace: true });
         handleLogin(email, password)
       })
       .catch((e) => {
@@ -194,7 +192,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           handleIsLogged();
-          // setEmailUser(email);
           checkToken();
           navigate("/movies", { replace: true });
         }
@@ -233,10 +230,6 @@ function App() {
           name: userData.name,
           email: userData.email,
         });
-        setIsInfoTooltipMessage({
-          image: '',
-          description: '',
-        });
         setIsTooltipActive(true);
         setIsInfoTooltipMessage({
           image: fetchOK,
@@ -245,10 +238,6 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
-        setIsInfoTooltipMessage({
-          image: '',
-          description: '',
-        });
 
         setIsTooltipActive(true);
         if (err === 409) {
@@ -262,8 +251,25 @@ function App() {
 
   const handleSignout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem('beatFilmsMovies');
+    localStorage.removeItem('beatFilmsSearchQuery');
+    localStorage.removeItem('beatFilmsIsShort');
+    // localStorage.removeItem('searchResult');
+    localStorage.removeItem('savedMovies');
     setLoggedIn(false);
-    // setIsMobileMenuOpen(false);
+    setBeatFilmsMovies(null);
+    setBeatFilmsSearchQuery('');
+    setBeatFilmsIsShort(false);
+    setBeatFilmsInputValue('');
+    setSavedMovies(null);
+    setSavedMoviesSearchQuery('');
+    setSavedMoviesIsShort(false);
+    setSavedMoviesInutValue('');
+    setCurrentUser({
+      _id: '',
+      name: '',
+      email: '',
+    });
     navigate("/", { replace: true });
   };
 
@@ -313,23 +319,34 @@ function App() {
       .catch((err) => console.log(err, err.status, err.message));
   };
 
-  const [isOpenErrorModal, setIsOpenErrorModal] = React.useState(false);
+  // const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
   let { pathname } = useLocation();
 
-  const handleSubmitProfileWithErr = (e) => {
-    e.preventDefault();
-    setIsOpenErrorModal(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleHamburger = () => {
+    setIsMobileMenuOpen(true);
   }
 
-  // Закрытие модальных окон
+  // Закрытие модальных окон и мобильного меню
   const closeModal = () => {
     setIsTooltipActive(false);
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <div className="app">
-        {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header loggedIn={loggedIn}/> : null}
+        {pathname === '/' ||
+        pathname === '/movies' ||
+        pathname === '/saved-movies' ||
+        pathname === '/profile' ?
+          <Header
+            loggedIn={loggedIn}
+            isMobileMenuOpen={isMobileMenuOpen}
+            onClose={closeModal}
+            handleHamburger={handleHamburger}
+          /> : null}
 
         <Routes>
           <Route
@@ -342,12 +359,12 @@ function App() {
               <ProtectedRoute
                 element={Movies}
                 beatFilmsMovies={filteredMovies}
+                searchQuery={beatFilmsSearchQuery}
+                setSearchQuery={setBeatFilmsSearchQuery}
                 inputValue={beatFilmsInputValue}
                 setInputValue={setBeatFilmsInputValue}
                 isShort={beatFilmsIsShort}
                 setIsShort={setBeatFilmsIsShort}
-                searchQuery={beatFilmsSearchQuery}
-                setSearchQuery={setBeatFilmsSearchQuery}
                 windowSize={windowSize}
                 isLoading={isLoadingBeatFilms}
                 searchError={searchError}
@@ -364,6 +381,12 @@ function App() {
               <ProtectedRoute
                 element={SavedMovies}
                 movies={filteredSavedMovies}
+                searchQuery={savedMoviesSearchQuery}
+                setSearchQuery={setSavedMoviesSearchQuery}
+                inputValue={savedMoviesInputValue}
+                setInputValue={setSavedMoviesInutValue}
+                isShort={savedMoviesIsShort}
+                setIsShort={setSavedMoviesIsShort}
                 formatTime={formatTime}
                 onCardDelete={handleDeleteClick}
                 loggedIn={loggedIn}
@@ -375,7 +398,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={Profile}
-                onSubmit={handleSubmitProfileWithErr}
+                // onSubmit={handleSubmitProfileWithErr}
                 loggedIn={loggedIn}
                 handleSignout={handleSignout}
                 handleEditProfile={handleEditProfile}
@@ -414,7 +437,7 @@ function App() {
 
         <Tooltip
           isTooltipActive={isTooltipActive}
-          isOpen={isOpenErrorModal}
+          // isOpen={isOpenErrorModal}
           onClose={closeModal}
           description={isInfoTooltipMessage.description}
           image={isInfoTooltipMessage.image}

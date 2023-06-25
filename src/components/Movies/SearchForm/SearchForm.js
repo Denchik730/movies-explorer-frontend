@@ -1,6 +1,6 @@
 import './SearchForm.css';
 
-import React from 'react';
+import { useState } from 'react';
 
 function SearchForm({
   inputValue,
@@ -9,11 +9,11 @@ function SearchForm({
   setIsShort,
   onSearch,
 }) {
-  const [emptyInputError, setEmptyInputError] = React.useState(false);
+  const [emptyInputError, setEmptyInputError] = useState(false);
+
 
   const handleSearchInput = (e) => {
     setInputValue(e.target.value);
-    console.log(inputValue);
   }
 
   // Переключение чекбокса

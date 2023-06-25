@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, useHistory } from "react-router-dom";
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -13,6 +13,7 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Tooltip from '../Tooltip/Tooltip';
+import PageNotFound from '../PageNotFound/PageNotFound'
 
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
@@ -71,10 +72,6 @@ function App() {
     return hour ? `${hour}ч ${min}м` : `${min}м`;
   };
 
-  useEffect(() => {
-    checkToken();
-  }, []);
-
   const handleIsLogged = () => {
     setLoggedIn(true);
   };
@@ -117,21 +114,17 @@ function App() {
   });
 
   const filteredMovies = flterMoviesBySearch(beatFilmsMovies, beatFilmsSearchQuery, beatFilmsIsShort);
-  // localStorage.setItem('searchResult', JSON.stringify(filteredMovies));
 
   const filteredSavedMovies = flterMoviesBySearch(savedMovies, savedMoviesSearchQuery, savedMoviesIsShort)
-  // localStorage.setItem('savedMovies', JSON.stringify(filteredSavedMovies));
 
   useEffect(() => {
     if (loggedIn) {
       localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
       localStorage.setItem('beatFilmsIsShort', JSON.stringify(beatFilmsIsShort));
-      // localStorage.setItem('searchResult', JSON.stringify(filteredMovies));
-      // localStorage.setItem('savedMovies', JSON.stringify(filteredSavedMovies));
     }
   }, [loggedIn, beatFilmsSearchQuery, beatFilmsIsShort, filteredMovies, filteredSavedMovies]);
 
-  const checkToken = () => {
+  const checkToken = useCallback(() => {
     const jwt = localStorage.getItem("token");
     if (jwt) {
       mainApi
@@ -141,7 +134,6 @@ function App() {
             const { _id, name, email } = data;
             setCurrentUser({ _id, name, email });
             handleIsLogged();
-            navigate("/movies", { replace: true });
           }
         })
         .catch((e) => {
@@ -153,7 +145,11 @@ function App() {
           }
         });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const handleRegister = (name, email, password) => {
     setIsFetching(true);
@@ -198,7 +194,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           handleIsLogged();
-          checkToken();
           navigate("/movies", { replace: true });
         }
       })
@@ -432,11 +427,7 @@ function App() {
           <Route
             path="*"
             element={
-              loggedIn ? (
-                <Navigate to="/" replace />
-              ) : (
-                <Navigate to="/signin" replace />
-              )
+              <PageNotFound/>
             }
           />
         </Routes>

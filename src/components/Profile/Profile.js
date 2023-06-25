@@ -29,7 +29,8 @@ function Profile({
 
   const isButtonAble =
     isValid &&
-    (values.name !== currentUser.name || values.email !== currentUser.email) &&
+    (values.name !== currentUser.name ||
+    values.email !== currentUser.email) &&
     !isFetching;
 
   return (

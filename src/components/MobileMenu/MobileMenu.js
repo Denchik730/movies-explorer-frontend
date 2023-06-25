@@ -4,10 +4,13 @@ import { NavLink } from 'react-router-dom';
 
 function MobileMenu( {
   isOpen,
-  handleClose
+  handleClose,
+  handleOverlay,
 }) {
   return (
-    <div className={`mobile-menu ${isOpen ? 'mobile-menu_opened' : ''}`}>
+    <div
+      className={`mobile-menu ${isOpen ? 'mobile-menu_opened' : ''}`}
+      onClick={handleOverlay}>
       <div className="mobile-menu__container">
         <button onClick={handleClose} className="mobile-menu__close"/>
         <nav className="mobile-menu__content">

@@ -9,7 +9,8 @@ function Header( {
   loggedIn,
   isMobileMenuOpen,
   onClose,
-  handleHamburger
+  handleHamburger,
+  handleOverlay
 }) {
   let { pathname } = useLocation();
 
@@ -33,7 +34,10 @@ function Header( {
         </nav>
       )}
 
-      <MobileMenu isOpen={isMobileMenuOpen} handleClose={onClose}/>
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        handleClose={onClose}
+        handleOverlay={handleOverlay}/>
     </header>
   );
 }

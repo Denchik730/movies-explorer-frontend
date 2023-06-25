@@ -47,6 +47,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTooltipActive, setIsTooltipActive] = useState(false);
   const [isInfoTooltipMessage, setIsInfoTooltipMessage] = useState({
     image: '',
@@ -54,6 +55,7 @@ function App() {
   });
 
   const navigate = useNavigate();
+  let { pathname } = useLocation();
 
   const handleResize = useCallback(() => {
     setTimeout(() => setWindowSize(window.innerWidth), 100);
@@ -321,10 +323,6 @@ function App() {
       .catch((err) => console.log(err, err.status, err.message));
   };
 
-  let { pathname } = useLocation();
-
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const handleHamburger = () => {
     setIsMobileMenuOpen(true);
   }
@@ -333,6 +331,28 @@ function App() {
   const closeModal = () => {
     setIsTooltipActive(false);
     setIsMobileMenuOpen(false);
+  };
+
+  // Функция закрытия окон по esc
+  useEffect(() => {
+    if (!isTooltipActive && !isMobileMenuOpen) {
+      return;
+    }
+
+    const closeByEsc = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', closeByEsc);
+    return () => document.removeEventListener('keydown', closeByEsc);
+  }, [isTooltipActive, isMobileMenuOpen]);
+
+  const handleOverlay = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
   };
 
   return (
@@ -347,6 +367,7 @@ function App() {
             isMobileMenuOpen={isMobileMenuOpen}
             onClose={closeModal}
             handleHamburger={handleHamburger}
+            handleOverlay={handleOverlay}
           /> : null}
 
         <Routes>
@@ -443,6 +464,7 @@ function App() {
           onClose={closeModal}
           description={isInfoTooltipMessage.description}
           image={isInfoTooltipMessage.image}
+          handleOverlay={handleOverlay}
         />
       </div>
     </CurrentUserContext.Provider>

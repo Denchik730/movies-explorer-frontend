@@ -12,7 +12,7 @@ const request = (baseUrl, endpoint, options) => {
 };
 
 export const getMovies = () => {
-  return request(BASE_URL, `/beatfilm-movies`).then((response) => response)
+  return request(BASE_URL, `beatfilm-movies`).then((response) => response)
 }
 
 

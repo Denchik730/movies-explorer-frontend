@@ -163,6 +163,12 @@ function App() {
       })
       .catch((e) => {
         setIsTooltipActive(true);
+
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+
         console.log(e)
         if (e === 400) {
           setIsInfoTooltipMessage({
@@ -202,6 +208,11 @@ function App() {
       .catch((e) => {
         setIsTooltipActive(true);
 
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+
         if (e === 400) {
           setIsInfoTooltipMessage({
             image: errorImg,
@@ -236,7 +247,14 @@ function App() {
           name: userData.name,
           email: userData.email,
         });
+
         setIsTooltipActive(true);
+
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+
         setIsInfoTooltipMessage({
           image: fetchOK,
           description: 'Данные успешно изменены',
@@ -244,6 +262,12 @@ function App() {
       })
       .catch((err) => {
         setIsTooltipActive(true);
+
+        setIsInfoTooltipMessage({
+          image: '',
+          description: '',
+        });
+
         if (err === 409) {
           setIsInfoTooltipMessage({
             image: errorImg,
@@ -254,12 +278,15 @@ function App() {
       .finally(() => setIsFetching(false))
   }
 
-  const handleSignout = () => {
+  const clearLocalStorage = () => {
     localStorage.removeItem("token");
     localStorage.removeItem('beatFilmsMovies');
     localStorage.removeItem('beatFilmsSearchQuery');
     localStorage.removeItem('beatFilmsIsShort');
     localStorage.removeItem('savedMovies');
+  }
+
+  const defaultUseState = () => {
     setLoggedIn(false);
     setBeatFilmsMovies(null);
     setBeatFilmsSearchQuery('');
@@ -274,6 +301,11 @@ function App() {
       name: '',
       email: '',
     });
+  }
+
+  const handleSignout = () => {
+    clearLocalStorage();
+    defaultUseState();
     navigate("/", { replace: true });
   };
 

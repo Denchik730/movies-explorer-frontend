@@ -112,8 +112,7 @@ class Api {
 }
 
 const mainApi = new Api({
-  // baseUrl: BASE_URL_MAIN_API,
-  baseUrl: 'http://localhost:3001',
+  baseUrl: BASE_URL_MAIN_API,
   headers: {
     'Authorization': `Bearer ${localStorage.getItem("token")}`,
     'Content-Type': 'application/json',

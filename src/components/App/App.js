@@ -202,6 +202,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           handleIsLogged();
+          checkToken();
           navigate("/movies", { replace: true });
         }
       })

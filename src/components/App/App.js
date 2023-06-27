@@ -34,13 +34,16 @@ function App() {
   const [beatFilmsInputValue, setBeatFilmsInputValue] = useState(
     localStorage.getItem('beatFilmsSearchQuery') || ''
   );
+  const [token, setToken] = useState(
+    localStorage.getItem('token') || ''
+  )
 
   const [savedMovies, setSavedMovies] = useState(null);
   const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = useState('');
   const [savedMoviesIsShort, setSavedMoviesIsShort] = useState(false);
   const [savedMoviesInputValue, setSavedMoviesInutValue] = useState('');
 
-  const [searchError, setSearchError] = useState('');
+  const [searchError, setSearchError] = useState(false);
   const [isLoadingBeatFilms, setIsLoadingBeatFilms] = useState(false);
   const [isFetching, setIsFetching] = useState(null);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
@@ -81,7 +84,7 @@ function App() {
   useEffect(() => {
     if (
       !beatFilmsMovies &&
-      beatFilmsInputValue.length > 0
+      beatFilmsSearchQuery.length > 0
     ) {
       setIsLoadingBeatFilms(true);
       getMovies()
@@ -89,20 +92,11 @@ function App() {
           setBeatFilmsMovies(movies);
           localStorage.setItem('beatFilmsMovies', JSON.stringify(movies));
         })
-        .catch((err) => setSearchError(err))
+        .catch((err) => setSearchError(true))
         .finally(() => setIsLoadingBeatFilms(false));
     }
 
-  }, [beatFilmsMovies, beatFilmsInputValue, loggedIn])
-
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .getSavedMovies()
-        .then((movies) => setSavedMovies(movies))
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
+  }, [beatFilmsMovies, beatFilmsSearchQuery, loggedIn])
 
   const flterMoviesBySearch = useCallback((movies, searchQuery, isShort) => {
     if (!movies) {
@@ -124,7 +118,7 @@ function App() {
       localStorage.setItem('beatFilmsSearchQuery', beatFilmsSearchQuery);
       localStorage.setItem('beatFilmsIsShort', JSON.stringify(beatFilmsIsShort));
     }
-  }, [loggedIn, beatFilmsSearchQuery, beatFilmsIsShort, filteredMovies, filteredSavedMovies]);
+  }, [loggedIn, beatFilmsSearchQuery, beatFilmsIsShort]);
 
   const checkToken = useCallback(() => {
     const jwt = localStorage.getItem("token");
@@ -203,6 +197,7 @@ function App() {
         if (data.token) {
           handleIsLogged();
           checkToken();
+          setToken(data.token)
           navigate("/movies", { replace: true });
         }
       })
@@ -238,11 +233,29 @@ function App() {
       .finally(() => setIsFetching(false))
   };
 
+  useEffect(() => {
+    if (loggedIn) {
+      console.log(localStorage.getItem("token"))
+      // mainApi
+      //   .getSavedMovies()
+      //   .then((movies) => setSavedMovies(movies))
+      //   .catch((err) => console.log(err));
+      getLikeFilms(token);
+    }
+  }, [loggedIn]);
+
+  const getLikeFilms = (token) => {
+    mainApi
+      .getSavedMovies(token)
+      .then((movies) => setSavedMovies(movies))
+      .catch((err) => console.log(err));
+  }
+
   const handleEditProfile = ( name, email ) => {
     setIsFetching(true);
 
     mainApi
-      .setProfileUserInfo( name, email )
+      .setProfileUserInfo( name, email, token )
       .then((userData) => {
         setCurrentUser({
           name: userData.name,
@@ -280,7 +293,7 @@ function App() {
   }
 
   const clearLocalStorage = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     localStorage.removeItem('beatFilmsMovies');
     localStorage.removeItem('beatFilmsSearchQuery');
     localStorage.removeItem('beatFilmsIsShort');
@@ -327,7 +340,7 @@ function App() {
           thumbnail: BASE_URL_MOVIES_API + movie.image.formats.thumbnail.url,
           owner: movie.owner,
           nameEN: movie.nameEN,
-        })
+        }, token)
         .then((savedMovie) => setSavedMovies([savedMovie, ...savedMovies]))
         .catch((err) => console.log(err, err.status, err.message));
     } else {
@@ -335,7 +348,7 @@ function App() {
         (item) => item.movieId === movie.id
       )._id;
       mainApi
-        .deleteSavedMovie(savedMovieId)
+        .deleteSavedMovie(savedMovieId, token)
         .then(() => {
           setSavedMovies((state) =>
             state.filter((item) => item.movieId !== movie.id)
@@ -347,7 +360,7 @@ function App() {
 
   const handleDeleteClick = (movie) => {
     mainApi
-      .deleteSavedMovie(movie._id)
+      .deleteSavedMovie(movie._id, token)
       .then(() => {
         setSavedMovies((state) =>
           state.filter((item) => item.movieId !== movie.movieId)

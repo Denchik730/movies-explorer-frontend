@@ -3,7 +3,7 @@ import { BASE_URL_MAIN_API } from "./constants";
 class Api {
   constructor({baseUrl, headers}) {
     this._url = baseUrl;
-    this._headers = headers
+    // this._headers = headers
   }
 
   _checkRes(res) {
@@ -20,7 +20,9 @@ class Api {
   register(name, email, password) {
     return this._request(`${this._url}/signup`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         name: name,
         email: email,
@@ -32,7 +34,9 @@ class Api {
   login(email, password) {
     return this._request(`${this._url}/signin`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         email: email,
         password: password,
@@ -56,16 +60,22 @@ class Api {
     })
   }
 
-  getUserInfo() {
+  getUserInfo(token) {
     return this._request(`${this._url}/users/me`, {
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
     });
   }
 
-  setProfileUserInfo(name, email) {
+  setProfileUserInfo(name, email, token) {
     return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         email: email,
         name: name,
@@ -73,16 +83,23 @@ class Api {
     });
   }
 
-  getSavedMovies() {
+  getSavedMovies(token) {
     return this._request(`${this._url}/movies`, {
-      headers: this._headers
+      // headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     });
   }
 
-  addNewMovies(dataMovies) {
+  addNewMovies(dataMovies, token) {
     return this._request(`${this._url}/movies`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         country: dataMovies.country,
         director: dataMovies.director,
@@ -99,10 +116,13 @@ class Api {
     });
   }
 
-  deleteSavedMovie(id) {
+  deleteSavedMovie(id, token) {
     return this._request(`${this._url}/movies/${id}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
     });
   }
 
@@ -113,10 +133,11 @@ class Api {
 
 const mainApi = new Api({
   baseUrl: BASE_URL_MAIN_API,
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem("token")}`,
-    'Content-Type': 'application/json',
-  },
+  // baseUrl: 'http://localhost:3001',
+  // headers: {
+  //   'Authorization': `Bearer ${localStorage.getItem("token")}`,
+  //   'Content-Type': 'application/json',
+  // },
 });
 
 export default mainApi;

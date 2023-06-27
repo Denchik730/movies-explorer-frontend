@@ -63,6 +63,7 @@ function Profile({
                   type="email"
                   className="profile__input"
                   required
+                  pattern='^.+@.+\..+$'
                   value={values.email || ''}
                   onChange={handleChange}/>
               </li>

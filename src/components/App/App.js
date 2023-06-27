@@ -288,6 +288,13 @@ function App() {
             description: 'Пользователь с указанной почтой уже существует',
           });
         }
+
+        if (err === 400) {
+          setIsInfoTooltipMessage({
+            image: errorImg,
+            description: 'Некорректно заполнено одно из полей',
+          });
+        }
       })
       .finally(() => setIsFetching(false))
   }

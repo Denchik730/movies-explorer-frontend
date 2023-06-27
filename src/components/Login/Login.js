@@ -32,6 +32,7 @@ function Login({
                 id="login-input-email"
                 className="auth__input"
                 required
+                pattern='^.+@.+\..+$'
                 value={values.email || ''}
                 onChange={handleChange}
               />

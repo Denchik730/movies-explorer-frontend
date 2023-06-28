@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, useLocation, useNavigate, useHistory } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -49,7 +49,9 @@ function App() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(
+    JSON.parse(localStorage.getItem('loggedIn')) || false
+  );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTooltipActive, setIsTooltipActive] = useState(false);
   const [isInfoTooltipMessage, setIsInfoTooltipMessage] = useState({
@@ -59,6 +61,19 @@ function App() {
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
+
+//   useEffect(() => {
+//     navigate(JSON.parse(window.sessionStorage.getItem('lastRoute')) || '/')
+//     window.onbeforeunload = () => {
+//         window.sessionStorage.setItem('lastRoute', JSON.stringify(window.location.pathname))
+//     }
+// }, [])
+
+  useEffect(() => {
+    if (loggedIn && (pathname === '/signin' || pathname === '/signup')) {
+      navigate('/');
+    }
+  }, [loggedIn])
 
   const handleResize = useCallback(() => {
     setTimeout(() => setWindowSize(window.innerWidth), 100);
@@ -130,6 +145,7 @@ function App() {
             const { _id, name, email } = data;
             setCurrentUser({ _id, name, email });
             handleIsLogged();
+            localStorage.setItem('loggedIn', JSON.stringify(true));
           }
         })
         .catch((e) => {
@@ -197,7 +213,7 @@ function App() {
         if (data.token) {
           handleIsLogged();
           checkToken();
-          setToken(data.token)
+          setToken(data.token);
           navigate("/movies", { replace: true });
         }
       })
@@ -305,6 +321,7 @@ function App() {
     localStorage.removeItem('beatFilmsSearchQuery');
     localStorage.removeItem('beatFilmsIsShort');
     localStorage.removeItem('savedMovies');
+    localStorage.removeItem('loggedIn');
   }
 
   const defaultUseState = () => {
@@ -433,6 +450,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={Movies}
+                loggedIn={loggedIn}
                 beatFilmsMovies={filteredMovies}
                 searchQuery={beatFilmsSearchQuery}
                 setSearchQuery={setBeatFilmsSearchQuery}
@@ -446,7 +464,6 @@ function App() {
                 formatTime={formatTime}
                 onCardSave={handleLikeClick}
                 savedMovies={savedMovies}
-                loggedIn={loggedIn}
               />}
           />
 
@@ -455,6 +472,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={SavedMovies}
+                loggedIn={loggedIn}
                 movies={filteredSavedMovies}
                 searchQuery={savedMoviesSearchQuery}
                 setSearchQuery={setSavedMoviesSearchQuery}
@@ -464,7 +482,6 @@ function App() {
                 setIsShort={setSavedMoviesIsShort}
                 formatTime={formatTime}
                 onCardDelete={handleDeleteClick}
-                loggedIn={loggedIn}
               />
             }/>
 

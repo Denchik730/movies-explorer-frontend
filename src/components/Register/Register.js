@@ -3,6 +3,7 @@ import './Register.css';
 import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import { PAGES } from '../../utils/constants';
 
 function Register({
   handleRegister,
@@ -76,7 +77,7 @@ function Register({
           className={`auth__submit-btn register__submit-btn ${!isValid && 'auth__submit-btn_inactive'}`}>
             Зарегистрироваться
         </button>
-        <p className="auth__descr-link" href="#">Уже зарегистрированы? <Link to="/signin" className="auth__link">Войти</Link></p>
+        <p className="auth__descr-link" href="#">Уже зарегистрированы? <Link to={PAGES.PAGE_SIGNIN} className="auth__link">Войти</Link></p>
       </form>
     </main>
   );

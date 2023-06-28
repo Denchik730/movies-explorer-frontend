@@ -6,6 +6,8 @@ import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
+import { BIG_DEVICE, MIDDLE_DEVICE, SMALL_DEVICE, SEARCH_SERVER_ERROR_DESCR, MOVIES_NOT_FOUND_DESCR } from '../../utils/constants';
+
 function Movies({
   beatFilmsMovies,
   searchQuery,
@@ -25,11 +27,11 @@ function Movies({
 
   const moviesCards = React.useCallback(() => {
     if (windowSize >= 1280) {
-      setViewMoviesCards(12);
+      setViewMoviesCards(BIG_DEVICE.DEFAULT_CARDS);
     } else if (windowSize >= 768) {
-      setViewMoviesCards(8);
+      setViewMoviesCards(MIDDLE_DEVICE.DEFAULT_CARDS);
     } else {
-      setViewMoviesCards(5);
+      setViewMoviesCards(SMALL_DEVICE.DEFAULT_CARDS);
     }
   }, [windowSize]);
 
@@ -40,12 +42,12 @@ function Movies({
   }, [searchQuery, isShort, moviesCards]);
 
   const showMoreMovies = () => {
-    if (windowSize >= 1280) {
-      setViewMoviesCards(viewMoviesCards + 3);
-    } else if (windowSize >= 768) {
-      setViewMoviesCards(viewMoviesCards + 2);
+    if (windowSize >= BIG_DEVICE.SIZE_PX) {
+      setViewMoviesCards(viewMoviesCards + BIG_DEVICE.ADD_CARDS);
+    } else if (windowSize >= MIDDLE_DEVICE.SIZE_PX) {
+      setViewMoviesCards(viewMoviesCards + MIDDLE_DEVICE.ADD_CARDS);
     } else {
-      setViewMoviesCards(viewMoviesCards + 2);
+      setViewMoviesCards(viewMoviesCards + SMALL_DEVICE.ADD_CARDS);
     }
   };
 
@@ -74,10 +76,7 @@ function Movies({
         setIsShort={setIsShort}
         onSearch={handleSearchButtonClick}
       />
-      {searchError ? <p className="movies__inputs-search-error">
-        Во время запроса произошла ошибка. Возможно, проблема с соединением
-        или сервер недоступен. Подождите немного и попробуйте ещё раз.
-      </p> : ''}
+      {searchError ? <p className="movies__inputs-search-error">{SEARCH_SERVER_ERROR_DESCR}</p> : ''}
       {
         !beatFilmsMovies ? null : (
           isLoading ? <Preloader/> : beatFilmsMovies.length > 0 ? <MoviesCardList
@@ -87,7 +86,7 @@ function Movies({
           moviesList={
             beatFilmsMovies.slice(0, viewMoviesCards)
           }
-          /> :<p className="movies__no-found">Ничего не найдено</p>
+          /> :<p className="movies__no-found">{MOVIES_NOT_FOUND_DESCR}</p>
         )
       }
 

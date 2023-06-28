@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
+import { PAGES } from '../../utils/constants';
+
 function Login({
   handleLogin,
   isFetching,
@@ -19,7 +21,7 @@ function Login({
 
   return (
     <main className="login app__login">
-      <Link to="/" className="logo login__logo"/>
+      <Link to={PAGES.PAGE_MAIN} className="logo login__logo"/>
       <h2 className="auth__title login__title">Рады видеть!</h2>
       <form onSubmit={handleSubmit} className="auth__form login__form">
         <fieldset className="auth__form-fieldset">
@@ -61,7 +63,7 @@ function Login({
           className={`auth__submit-btn register__submit-btn ${!isValid &&  'auth__submit-btn_inactive'}`}>
             Войти
         </button>
-        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to="/signup" className="auth__link">Регистрация</Link></p>
+        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to={PAGES.PAGE_SIGNUP} className="auth__link">Регистрация</Link></p>
       </form>
     </main>
   );

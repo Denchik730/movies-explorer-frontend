@@ -1,9 +1,8 @@
 import { BASE_URL_MAIN_API } from "./constants";
 
 class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl }) {
     this._url = baseUrl;
-    // this._headers = headers
   }
 
   _checkRes(res) {
@@ -85,7 +84,6 @@ class Api {
 
   getSavedMovies(token) {
     return this._request(`${this._url}/movies`, {
-      // headers: this._headers
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -133,11 +131,6 @@ class Api {
 
 const mainApi = new Api({
   baseUrl: BASE_URL_MAIN_API,
-  // baseUrl: 'http://localhost:3001',
-  // headers: {
-  //   'Authorization': `Bearer ${localStorage.getItem("token")}`,
-  //   'Content-Type': 'application/json',
-  // },
 });
 
 export default mainApi;

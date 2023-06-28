@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.nomoreparties.co';
+import { BASE_URL_MOVIES_API } from "./constants";
 
 const checkResponse = (response) => {
   if (response.ok) {
@@ -12,7 +12,7 @@ const request = (baseUrl, endpoint, options) => {
 };
 
 export const getMovies = () => {
-  return request(BASE_URL, `beatfilm-movies`).then((response) => response)
+  return request(BASE_URL_MOVIES_API, `beatfilm-movies`).then((response) => response)
 }
 
 

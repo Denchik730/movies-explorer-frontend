@@ -17,7 +17,13 @@ import PageNotFound from '../PageNotFound/PageNotFound'
 
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-import { BASE_URL_MOVIES_API } from '../../utils/constants';
+import {
+  BASE_URL_MOVIES_API,
+  SHORT_MOVIE_DURATION,
+  PAGES,
+  REQUEST_ERROR,
+  REQUEST_SUCCESS,
+} from '../../utils/constants';
 import errorImg from '../../images/popup-error.png';
 import fetchOK from '../../images/popup-success.png';
 import mainApi from '../../utils/MainApi';
@@ -62,15 +68,8 @@ function App() {
   const navigate = useNavigate();
   let { pathname } = useLocation();
 
-//   useEffect(() => {
-//     navigate(JSON.parse(window.sessionStorage.getItem('lastRoute')) || '/')
-//     window.onbeforeunload = () => {
-//         window.sessionStorage.setItem('lastRoute', JSON.stringify(window.location.pathname))
-//     }
-// }, [])
-
   useEffect(() => {
-    if (loggedIn && (pathname === '/signin' || pathname === '/signup')) {
+    if (loggedIn && (pathname === PAGES.PAGE_SIGNIN || pathname === PAGES.PAGE_SIGNUP)) {
       navigate('/');
     }
   }, [loggedIn])
@@ -119,7 +118,7 @@ function App() {
     }
 
     return movies.filter((movie) => {
-      return (isShort ? movie.duration < 40 : movie) &&
+      return (isShort ? movie.duration < SHORT_MOVIE_DURATION : movie) &&
         movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
     });
   });
@@ -149,11 +148,11 @@ function App() {
           }
         })
         .catch((e) => {
-          if (e === 400) {
-            console.log(`Ошибка: ${e} - Токен не передан или передан не в том формате`);
+          if (e === REQUEST_ERROR.BAD_REQUEST.CODE) {
+            console.log(REQUEST_ERROR.BAD_REQUEST.DESCRIPTION_FOR_TOKEN);
           }
-          if (e === 401) {
-            console.log(`Ошибка: ${e} - Переданный токен некорректен`);
+          if (e === REQUEST_ERROR.UNAUTHORIZATION.CODE) {
+            console.log(REQUEST_ERROR.UNAUTHORIZATION.DESCRIPTION_FOR_TOKEN);
           }
         });
     }
@@ -180,24 +179,24 @@ function App() {
         });
 
         console.log(e)
-        if (e === 400) {
+        if (e === REQUEST_ERROR.BAD_REQUEST.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Некорректно заполнено одно из полей',
+            description: REQUEST_ERROR.BAD_REQUEST.DESCRIPTION,
           });
         }
 
-        if (e === 409) {
+        if (e === REQUEST_ERROR.CONFLICT.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Пользователь с указанной почтой уже существует',
+            description: REQUEST_ERROR.CONFLICT.DESCRIPTION,
           });
         }
 
-        if (e === 500) {
+        if (e === REQUEST_ERROR.SERVER_ERROR.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Ошибка сервера, попробуйте ещё раз чуть позже',
+            description: REQUEST_ERROR.SERVER_ERROR.DESCRIPTION,
           });
         }
       })
@@ -214,7 +213,7 @@ function App() {
           handleIsLogged();
           checkToken();
           setToken(data.token);
-          navigate("/movies", { replace: true });
+          navigate(PAGES.PAGE_MOVIES, { replace: true });
         }
       })
       .catch((e) => {
@@ -225,24 +224,24 @@ function App() {
           description: '',
         });
 
-        if (e === 400) {
+        if (e === REQUEST_ERROR.BAD_REQUEST.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Некорректно заполнено одно из полей',
+            description: REQUEST_ERROR.BAD_REQUEST.DESCRIPTION,
           });
         }
 
-        if (e === 401) {
+        if (e === REQUEST_ERROR.UNAUTHORIZATION.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Пользователь с таким email не найден',
+            description: REQUEST_ERROR.UNAUTHORIZATION.DESCRIPTION,
           });
         }
 
-        if (e === 500) {
+        if (e === REQUEST_ERROR.SERVER_ERROR.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Ошибка сервера, попробуйте ещё раз чуть позже',
+            description: REQUEST_ERROR.SERVER_ERROR.DESCRIPTION,
           });
         }
       })
@@ -251,11 +250,6 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      console.log(localStorage.getItem("token"))
-      // mainApi
-      //   .getSavedMovies()
-      //   .then((movies) => setSavedMovies(movies))
-      //   .catch((err) => console.log(err));
       getLikeFilms(token);
     }
   }, [loggedIn]);
@@ -287,7 +281,7 @@ function App() {
 
         setIsInfoTooltipMessage({
           image: fetchOK,
-          description: 'Данные успешно изменены',
+          description: REQUEST_SUCCESS.UPDATE_PROFILE.DESCRIPTION,
         });
       })
       .catch((err) => {
@@ -298,17 +292,17 @@ function App() {
           description: '',
         });
 
-        if (err === 409) {
+        if (err === REQUEST_ERROR.CONFLICT.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Пользователь с указанной почтой уже существует',
+            description: REQUEST_ERROR.CONFLICT.DESCRIPTION,
           });
         }
 
-        if (err === 400) {
+        if (err === REQUEST_ERROR.BAD_REQUEST.CODE) {
           setIsInfoTooltipMessage({
             image: errorImg,
-            description: 'Некорректно заполнено одно из полей',
+            description: REQUEST_ERROR.BAD_REQUEST.DESCRIPTION,
           });
         }
       })
@@ -344,7 +338,7 @@ function App() {
   const handleSignout = () => {
     clearLocalStorage();
     defaultUseState();
-    navigate("/", { replace: true });
+    navigate(PAGES.PAGE_MAIN, { replace: true });
   };
 
   const handleLikeClick = (movie) => {
@@ -428,10 +422,10 @@ function App() {
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <div className="app">
-        {pathname === '/' ||
-        pathname === '/movies' ||
-        pathname === '/saved-movies' ||
-        pathname === '/profile' ?
+        {pathname === PAGES.PAGE_MAIN ||
+        pathname === PAGES.PAGE_MOVIES ||
+        pathname === PAGES.PAGE_SAVED_MOVIES ||
+        pathname === PAGES.PAGE_PROFILE ?
           <Header
             loggedIn={loggedIn}
             isMobileMenuOpen={isMobileMenuOpen}
@@ -442,11 +436,11 @@ function App() {
 
         <Routes>
           <Route
-            path="/"
+            path={PAGES.PAGE_MAIN}
             element={<Main/>}/>
 
           <Route
-            path="/movies"
+            path={PAGES.PAGE_MOVIES}
             element={
               <ProtectedRoute
                 element={Movies}
@@ -468,7 +462,7 @@ function App() {
           />
 
           <Route
-            path="/saved-movies"
+            path={PAGES.PAGE_SAVED_MOVIES}
             element={
               <ProtectedRoute
                 element={SavedMovies}
@@ -486,7 +480,7 @@ function App() {
             }/>
 
           <Route
-            path="/profile"
+            path={PAGES.PAGE_PROFILE}
             element={
               <ProtectedRoute
                 element={Profile}
@@ -498,7 +492,7 @@ function App() {
             />
 
           <Route
-            path="/signup"
+            path={PAGES.PAGE_SIGNUP}
             element={
               <Register
                 handleRegister={handleRegister}
@@ -507,7 +501,7 @@ function App() {
           />
 
           <Route
-            path="/signin"
+            path={PAGES.PAGE_SIGNIN}
             element={
               <Login
                 handleLogin={handleLogin}
@@ -523,9 +517,9 @@ function App() {
           />
         </Routes>
 
-        {pathname === '/' ||
-        pathname === '/movies' ||
-        pathname === '/saved-movies' ?
+        {pathname === PAGES.PAGE_MAIN||
+        pathname === PAGES.PAGE_MOVIES ||
+        pathname === PAGES.PAGE_SAVED_MOVIES ?
           <Footer/> :
           null}
 

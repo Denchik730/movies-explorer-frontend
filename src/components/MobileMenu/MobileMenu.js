@@ -2,6 +2,8 @@ import './MobileMenu.css'
 
 import { NavLink } from 'react-router-dom';
 
+import { PAGES } from '../../utils/constants';
+
 function MobileMenu( {
   isOpen,
   handleClose,
@@ -17,7 +19,7 @@ function MobileMenu( {
           <ul className="mobile-menu__links">
             <li className="mobile-menu__links-item">
               <NavLink
-                to="/"
+                to={PAGES.PAGE_MAIN}
                 className={({isActive}) =>
                   'mobile-menu__link' + (isActive ?
                   " mobile-menu__link_active" :
@@ -29,7 +31,7 @@ function MobileMenu( {
             </li>
             <li className="mobile-menu__links-item">
               <NavLink
-                  to="/movies"
+                  to={PAGES.PAGE_MOVIES}
                   className={({isActive}) =>
                     'mobile-menu__link' + (isActive ?
                     " mobile-menu__link_active" :
@@ -41,7 +43,7 @@ function MobileMenu( {
             </li>
             <li className="mobile-menu__links-item">
               <NavLink
-                to="/saved-movies"
+                to={PAGES.PAGE_SAVED_MOVIES}
                 className={({isActive}) =>
                   'mobile-menu__link' + (isActive ?
                   " mobile-menu__link_active" :
@@ -54,7 +56,7 @@ function MobileMenu( {
           </ul>
 
           <NavLink
-            to="/profile"
+            to={PAGES.PAGE_PROFILE}
             className="mobile-menu__profile-edit"
             onClick={handleClose}>
             Аккаунт

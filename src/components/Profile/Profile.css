@@ -103,6 +103,12 @@
   transition: opacity .5s;
 }
 
+.profile__btn-submit_inactive {
+  opacity: 0.6;
+  color: #bababa;
+  cursor: default;
+}
+
 .profile__btn-submit:hover {
   opacity: .7;
 }
@@ -121,6 +127,7 @@
   color: #EE3465;
   text-decoration: none;
   transition: opacity .5s;
+  cursor: pointer;
 }
 
 .profile__log-out:hover {

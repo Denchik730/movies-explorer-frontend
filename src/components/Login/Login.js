@@ -1,38 +1,69 @@
 import './Login.css';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function Login() {
-  const navigate = useNavigate();
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-  const handleRegisterSubmit = (e) => {
+import { PAGES } from '../../utils/constants';
+
+function Login({
+  handleLogin,
+  isFetching,
+}) {
+  const {values, handleChange, resetForm, errors, isValid} = useFormWithValidation();
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/movies');
+
+    const { email, password } = values;
+    handleLogin(email, password);
   }
 
   return (
     <main className="login app__login">
-      <Link to="/" className="logo login__logo"/>
+      <Link to={PAGES.PAGE_MAIN} className="logo login__logo"/>
       <h2 className="auth__title login__title">Рады видеть!</h2>
-      <form onSubmit={handleRegisterSubmit} className="auth__form login__form">
+      <form onSubmit={handleSubmit} className="auth__form login__form">
         <fieldset className="auth__form-fieldset">
           <ul role="none" className="auth__form-inputs">
             <li className="auth__form-inputs-item">
               <label htmlFor="login-input-email" className="auth__input-label">E-mail</label>
-              <input id="login-input-email" type="email" className="auth__input" required/>
-              <span className="auth__input-error login-input-email-error"></span>
+              <input
+                name="email"
+                type="email"
+                id="login-input-email"
+                className="auth__input"
+                required
+                pattern='^.+@.+\..+$'
+                value={values.email || ''}
+                onChange={handleChange}
+              />
+              <span className={`auth__input-error ${errors.email && 'auth__input-error_active'} login-input-email-error`}>{errors.email || ''}</span>
             </li>
 
             <li className="auth__form-inputs-item">
               <label htmlFor="login-input-password" className="auth__input-label">Пароль</label>
-              <input id="login-input-password" type="password" className="auth__input" required/>
-              <span className="auth__input-error auth__input-error_active login-input-password-error">Что-то пошло не так...</span>
+              <input
+                name="password"
+                type="password"
+                id="login-input-password"
+                className="auth__input"
+                required
+                value={values.password || ''}
+                onChange={handleChange}
+              />
+              <span className={`auth__input-error ${errors.password && 'auth__input-error_active'} login-input-password-error`}>{errors.password || ''}</span>
             </li>
           </ul>
         </fieldset>
 
-        <button type="submit" className="auth__submit-btn login__submit-btn">Войти</button>
-        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to="/signup" className="auth__link">Регистрация</Link></p>
+        <button
+          disabled={!isValid || isFetching}
+          type="submit"
+          className={`auth__submit-btn register__submit-btn ${!isValid &&  'auth__submit-btn_inactive'}`}>
+            Войти
+        </button>
+        <p className="auth__descr-link" href="#">Ещё не зарегистрированы? <Link to={PAGES.PAGE_SIGNUP} className="auth__link">Регистрация</Link></p>
       </form>
     </main>
   );

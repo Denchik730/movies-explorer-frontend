@@ -18,5 +18,3 @@ Frontend https://filmreview.nomoredomains.rocks/
 
 Backend https://api.filmreview.nomoredomains.rocks/
 
-## Pull request
-https://github.com/Denchik730/movies-explorer-frontend/pull/2

@@ -61,16 +61,16 @@ function SearchForm({
         )}
 
         <fildset className="search-form__short-movie">
-          <label className='search-form__switch'>
+          <label className="search-form__switch">
             <input
-              className='search-form__checkbox'
-              type='checkbox'
+              className="search-form__checkbox"
+              type="checkbox"
               checked={isShort}
               onChange={handleCheckbox}
             />
-            <span className='search-form__slider'></span>
+            <span className="search-form__slider"></span>
           </label>
-          <p className='search-form__short-movies-text'>Короткометражки</p>
+          <p className="search-form__short-movies-text">Короткометражки</p>
         </fildset>
       </form>
     </section>

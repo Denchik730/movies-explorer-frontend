@@ -2,8 +2,8 @@ import './Header.css'
 
 import { Link, useLocation } from 'react-router-dom';
 
-import Navigation from "./Navigation/Navigation";
-import MobileMenu from "../MobileMenu/MobileMenu";
+import Navigation from './Navigation/Navigation';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 import { PAGES } from '../../utils/constants';
 

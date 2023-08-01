@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -15,7 +15,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Tooltip from '../Tooltip/Tooltip';
 import PageNotFound from '../PageNotFound/PageNotFound'
 
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import {
   BASE_URL_MOVIES_API,
@@ -135,7 +135,7 @@ function App() {
   }, [loggedIn, beatFilmsSearchQuery, beatFilmsIsShort]);
 
   const checkToken = useCallback(() => {
-    const jwt = localStorage.getItem("token");
+    const jwt = localStorage.getItem('token');
     if (jwt) {
       mainApi
         .checkToken(jwt)

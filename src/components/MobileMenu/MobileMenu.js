@@ -22,8 +22,8 @@ function MobileMenu( {
                 to={PAGES.PAGE_MAIN}
                 className={({isActive}) =>
                   'mobile-menu__link' + (isActive ?
-                  " mobile-menu__link_active" :
-                  "")}
+                  ' mobile-menu__link_active' :
+                  '')}
                   onClick={handleClose}
               >
                 Главная
@@ -34,8 +34,8 @@ function MobileMenu( {
                   to={PAGES.PAGE_MOVIES}
                   className={({isActive}) =>
                     'mobile-menu__link' + (isActive ?
-                    " mobile-menu__link_active" :
-                    "")}
+                    ' mobile-menu__link_active' :
+                    '')}
                     onClick={handleClose}
                 >
                   Фильмы
@@ -46,8 +46,8 @@ function MobileMenu( {
                 to={PAGES.PAGE_SAVED_MOVIES}
                 className={({isActive}) =>
                   'mobile-menu__link' + (isActive ?
-                  " mobile-menu__link_active" :
-                  "")}
+                  ' mobile-menu__link_active' :
+                  '')}
                   onClick={handleClose}
               >
                 Сохранённые фильмы

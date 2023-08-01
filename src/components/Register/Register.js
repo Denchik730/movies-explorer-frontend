@@ -48,7 +48,7 @@ function Register({
                 name="email"
                 className="auth__input"
                 required
-                pattern='^.+@.+\..+$'
+                pattern="^.+@.+\..+$"
                 value={values.email || ''}
                 onChange={handleChange}
               />

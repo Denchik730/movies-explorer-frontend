@@ -1,6 +1,6 @@
 # movies-explorer-frontend
 
-Репозиторий для проекта `movies-explorer`, включающий фронтенд со следующими возможностями: авторизации и регистрации пользователей, операции с фильмами и пользователем.
+Репозиторий для пользовательского интерфейса проекта `movies-explorer`, включающий фронтенд со следующими возможностями: авторизации и регистрации пользователей, операции с фильмами и пользователем.
 
 ## Адрес репозитория
 
@@ -18,5 +18,3 @@ Frontend https://filmreview.nomoredomains.rocks/
 
 Backend https://api.filmreview.nomoredomains.rocks/
 
-## Pull request
-https://github.com/Denchik730/movies-explorer-frontend/pull/2

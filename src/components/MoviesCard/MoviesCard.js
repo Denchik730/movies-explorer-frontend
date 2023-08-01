@@ -30,7 +30,7 @@ function MoviesCard({
       <figure className="movie-card">
         <a
           href={movie.trailerLink}
-          target='_blank'
+          target="_blank"
           className="movie-card__trailer-link">
           {pathname === '/movies' ? (
             <img
@@ -56,7 +56,7 @@ function MoviesCard({
             <button
               type="button"
               aria-label="Удалить"
-              className='movie-card__delete'
+              className="movie-card__delete"
               onClick={handleDeleteClick}/>
           )}
           <p className="movie-card__duration">{formatTime(movie.duration)}</p>

@@ -1,7 +1,7 @@
 import './Profile.css';
 
 import React, { useContext, useEffect } from 'react';
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
@@ -54,7 +54,7 @@ function Profile({
                   value={values.name || ''}
                   onChange={handleChange}/>
               </li>
-              <span className={`profile__input-error ${errors.name && "profile__input-error_active"} profile__input-name-error`}>{errors.name || ''}</span>
+              <span className={`profile__input-error ${errors.name && 'profile__input-error_active'} profile__input-name-error`}>{errors.name || ''}</span>
               <li className="profile__form-inputs-item">
                 <label htmlFor="profile__input-email" className="profile__input-label">E-mail</label>
                 <input
@@ -63,7 +63,7 @@ function Profile({
                   type="email"
                   className="profile__input"
                   required
-                  pattern='^.+@.+\..+$'
+                  pattern="^.+@.+\..+$"
                   value={values.email || ''}
                   onChange={handleChange}/>
               </li>

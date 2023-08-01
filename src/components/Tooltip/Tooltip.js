@@ -4,9 +4,9 @@ function Tooltip(props) {
   return (
     <section
       className={`tooltip ${props.isTooltipActive ? 'tooltip_opened' : ''}`}
-      onClick={props.handleOverlay}>
+      onMouseDown={props.handleOverlay}>
       <div className="tooltip__container">
-        <img src={props.image} className="tooltip__image" alt="Ошибка запроса"/>
+        <img src={props.image} className="tooltip__image" alt="Иконка состояния запроса запроса"/>
         <h2 className="tooltip__title">
           {props.description}
         </h2>

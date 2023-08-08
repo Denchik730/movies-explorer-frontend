@@ -10,6 +10,7 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .about-me__name {
@@ -23,7 +24,7 @@
 }
 
 .about-me__post-and-age {
-  margin-top: 16px;
+  margin-top: 0;
   margin-bottom: 0;
   font-weight: 500;
   font-size: 18px;
@@ -33,7 +34,7 @@
 }
 
 .about-me__info-descr {
-  margin-top: 20px;
+  margin-top: 0;
   margin-bottom: 0;
   font-weight: 400;
   font-size: 14px;
